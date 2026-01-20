@@ -1,4 +1,4 @@
-package com.nubia.nokill;
+package com.khanhnguyen9872.nubiatoolkit;
 
 import android.app.AndroidAppHelper;
 import android.content.Context;
@@ -41,7 +41,7 @@ public class HookEntry implements IXposedHookLoadPackage {
             Context context = AndroidAppHelper.currentApplication();
             if (context != null) {
                 Cursor cursor = context.getContentResolver().query(
-                    Uri.parse("content://com.nubia.nokill.provider/settings"), 
+                    Uri.parse("content://com.khanhnguyen9872.nubiatoolkit.provider/settings"), 
                     null, null, null, null);
                 
                 if (cursor != null && cursor.moveToFirst()) {
@@ -72,8 +72,8 @@ public class HookEntry implements IXposedHookLoadPackage {
 
     @Override
     public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
-        if (lpparam.packageName.equals("com.nubia.nokill")) {
-             XposedHelpers.findAndHookMethod("com.nubia.nokill.MainActivity", lpparam.classLoader, "isModuleActive", 
+        if (lpparam.packageName.equals("com.khanhnguyen9872.nubiatoolkit")) {
+            XposedHelpers.findAndHookMethod("com.khanhnguyen9872.nubiatoolkit.MainActivity", lpparam.classLoader, "isModuleActive", 
                  new XC_MethodHook() { @Override protected void beforeHookedMethod(MethodHookParam param) { param.setResult(true); }});
              return;
         }

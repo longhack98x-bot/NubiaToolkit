@@ -1,4 +1,4 @@
-package com.nubia.nokill;
+package com.khanhnguyen9872.nubiatoolkit;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -14,7 +14,7 @@ import java.io.File;
 
 public class MainActivity extends Activity {
     
-    private static final String PREF_NAME = "com.nubia.nokill_preferences";
+    private static final String PREF_NAME = "com.khanhnguyen9872.nubiatoolkit_preferences";
     private static final String KEY_GLOBAL_ENABLED = "pref_global_enabled";
     private static final String KEY_NOKILL_ENABLED = "pref_nokill_enabled";
     private static final String KEY_GLOBAL_MODE_ENABLED = "pref_global_mode_enabled";

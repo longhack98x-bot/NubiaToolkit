@@ -1,4 +1,4 @@
-package com.nubia.nokill;
+package com.khanhnguyen9872.nubiatoolkit;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -10,7 +10,7 @@ import android.content.Context;
 
 public class SettingsProvider extends ContentProvider {
 
-    public static final String AUTHORITY = "com.nubia.nokill.provider";
+    public static final String AUTHORITY = "com.khanhnguyen9872.nubiatoolkit.provider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/settings");
     public static final String KEY_GLOBAL = "pref_global_enabled";
     public static final String KEY_NOKILL = "pref_nokill_enabled";
@@ -18,7 +18,7 @@ public class SettingsProvider extends ContentProvider {
     public static final String KEY_GLOBAL_MODE = "pref_global_mode_enabled";
     public static final String KEY_HIDE_ENERGY_CUBE = "pref_hide_energy_cube";
     public static final String KEY_LANGUAGE = "pref_language";
-    private static final String PREF_NAME = "com.nubia.nokill_preferences";
+    private static final String PREF_NAME = "com.khanhnguyen9872.nubiatoolkit_preferences";
 
     @Override
     public boolean onCreate() {

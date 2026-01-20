@@ -1,4 +1,4 @@
-package com.nubia.nokill;
+package com.khanhnguyen9872.nubiatoolkit;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,7 +12,7 @@ import android.view.View;
 
 public class SettingsActivity extends Activity {
 
-    private static final String PREF_NAME = "com.nubia.nokill_preferences";
+    private static final String PREF_NAME = "com.khanhnguyen9872.nubiatoolkit_preferences";
     private static final String KEY_SHOW_TOAST = "pref_show_toasts";
     private static final String KEY_USE_ROOT = "pref_use_root";
     private static final String KEY_FORCE_STOP = "pref_force_stop_on_apply";

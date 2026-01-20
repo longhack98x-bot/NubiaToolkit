@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace "com.nubia.nokill"
+    namespace "com.khanhnguyen9872.nubiatoolkit"
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.nubia.nokill"
+        applicationId "com.khanhnguyen9872.nubiatoolkit"
         minSdk 26
         targetSdk 33
         versionCode 1

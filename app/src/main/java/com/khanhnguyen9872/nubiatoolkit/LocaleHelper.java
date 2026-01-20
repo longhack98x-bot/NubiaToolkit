@@ -1,4 +1,4 @@
-package com.nubia.nokill;
+package com.khanhnguyen9872.nubiatoolkit;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -10,7 +10,7 @@ import java.util.Locale;
 
 public class LocaleHelper {
 
-    private static final String PREF_NAME = "com.nubia.nokill_preferences";
+    private static final String PREF_NAME = "com.khanhnguyen9872.nubiatoolkit_preferences";
     private static final String KEY_LANGUAGE = "pref_language";
 
     public static Context onAttach(Context context) {
