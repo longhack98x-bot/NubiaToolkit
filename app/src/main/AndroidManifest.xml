@@ -11,7 +11,7 @@
             android:value="true"/>
         <meta-data
             android:name="xposeddescription"
-            android:value="Disable Nubia Game Helper memory cleaning"/>
+            android:value="Optimize GameAssist with No Kill, Global Game Mode, and Hide Energy Cube for Nubia devices."/>
         <meta-data
             android:name="xposedminversion"
             android:value="82"/>
