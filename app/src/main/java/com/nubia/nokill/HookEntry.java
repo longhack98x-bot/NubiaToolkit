@@ -95,9 +95,9 @@ public class HookEntry implements IXposedHookLoadPackage {
                         if (!globalEnabled) return;
 
                         if (featureEnabled) {
-                            // if (showToastEnabled) {
-                            //     showToast(getLocalizedToast(lang));
-                            // }
+                            if (showToastEnabled) {
+                                showToast(getLocalizedToast(lang));
+                            }
                             param.setResult(null); 
                         }
                     }
