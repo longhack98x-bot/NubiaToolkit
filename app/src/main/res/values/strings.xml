@@ -33,7 +33,7 @@
     <string name="label_feature_hide_energy_cube">Hide Energy Cube Overlay</string>
     <string name="desc_feature_hide_energy_cube">Hides the Energy Cube animation when launching games</string>
     <string name="label_feature_watermark_length">Unlock Watermark Length</string>
-    <string name="desc_feature_watermark_length">Unlock the 10-character limit for custom watermarks</string>
+    <string name="desc_feature_watermark_length">Unlock custom watermark length limit (Up to 1000)</string>
     <string name="msg_changes_instant">Changes apply instantly</string>
 
     <!-- Settings Items -->
@@ -46,7 +46,7 @@
     <string name="warning_need_root">Please enable "Use Root"</string>
     
     <string name="label_force_stop">Force Stop on Apply</string>
-    <string name="desc_force_stop">Automatically stop GameAssist to apply changes</string>
+    <string name="desc_force_stop">Automatically stop applications to apply changes</string>
     
     <string name="label_language">Language</string>
     <string name="label_version">Version</string>
@@ -54,6 +54,9 @@
     <string name="author_name">KhanhNguyen9872</string>
 
     <!-- Toasts / Feedback -->
-    <string name="msg_force_stop_applied">GameAssist stopped to apply changes</string>
+    <string name="msg_force_stop_applied">Changes applied successfully</string>
+    <string name="msg_force_stop_helper">Game Helper stopped to apply changes</string>
+    <string name="msg_force_stop_space">Game Space stopped to apply changes</string>
+    <string name="msg_force_stop_both">Applications stopped to apply changes</string>
     <string name="msg_restart_required">Restart app to apply language</string>
 </resources>

@@ -104,38 +104,38 @@ public class MainActivity extends Activity {
             prefs.edit().putBoolean(KEY_GLOBAL_ENABLED, isChecked).apply();
             fixPermissions();
             updateFeatureState(isChecked);
-            forceStopPackages("cn.nubia.gameassist", "cn.nubia.gamelauncher");
+            forceStopPackages(R.string.msg_force_stop_both, "cn.nubia.gameassist", "cn.nubia.gamelauncher");
         });
 
         // Feature Toggle Listener
         switchNoKill.setOnCheckedChangeListener((buttonView, isChecked) -> {
             prefs.edit().putBoolean(KEY_NOKILL_ENABLED, isChecked).apply();
             fixPermissions();
-            forceStopPackage("cn.nubia.gameassist");
+            forceStopPackage("cn.nubia.gameassist", R.string.msg_force_stop_helper);
         });
 
         switchGlobalMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             prefs.edit().putBoolean(KEY_GLOBAL_MODE_ENABLED, isChecked).apply();
             fixPermissions();
-            forceStopPackage("cn.nubia.gameassist");
+            forceStopPackage("cn.nubia.gameassist", R.string.msg_force_stop_helper);
         });
 
         switchHideEnergyCube.setOnCheckedChangeListener((buttonView, isChecked) -> {
             prefs.edit().putBoolean(KEY_HIDE_ENERGY_CUBE, isChecked).apply();
             fixPermissions();
-            forceStopPackage("cn.nubia.gameassist");
+            forceStopPackage("cn.nubia.gameassist", R.string.msg_force_stop_helper);
         });
 
         switchSuperResolution.setOnCheckedChangeListener((buttonView, isChecked) -> {
             prefs.edit().putBoolean(KEY_SUPER_RESOLUTION, isChecked).apply();
             fixPermissions();
-            forceStopPackage("cn.nubia.gameassist");
+            forceStopPackage("cn.nubia.gameassist", R.string.msg_force_stop_helper);
         });
 
         switchWatermarkLength.setOnCheckedChangeListener((buttonView, isChecked) -> {
             prefs.edit().putBoolean(KEY_WATERMARK_LENGTH, isChecked).apply();
             fixPermissions();
-            forceStopPackage("cn.nubia.gamelauncher");
+            forceStopPackage("cn.nubia.gamelauncher", R.string.msg_force_stop_space);
         });
 
         findViewById(R.id.btn_settings).setOnClickListener(v -> {
@@ -157,11 +157,11 @@ public class MainActivity extends Activity {
         checkStatus(); 
     }
 
-    private void forceStopPackage(String packageName) {
-        forceStopPackages(packageName);
+    private void forceStopPackage(String packageName, int msgResId) {
+        forceStopPackages(msgResId, packageName);
     }
 
-    private void forceStopPackages(String... packageNames) {
+    private void forceStopPackages(int msgResId, String... packageNames) {
         new Thread(() -> {
             try {
                 SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -175,7 +175,7 @@ public class MainActivity extends Activity {
                     }
                     runOnUiThread(() -> {
                         android.widget.Toast.makeText(MainActivity.this, 
-                            R.string.msg_force_stop_applied, 
+                            msgResId, 
                             android.widget.Toast.LENGTH_SHORT).show();
                     });
                 }

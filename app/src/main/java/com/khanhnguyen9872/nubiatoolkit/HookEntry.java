@@ -107,8 +107,8 @@ public class HookEntry implements IXposedHookLoadPackage {
                             boolean watermarkLengthEnabled = (Boolean) settings[7];
                             
                             if (globalEnabled && watermarkLengthEnabled) {
-                                // Increase maxLength to something large (e.g., 100)
-                                param.args[1] = 100;
+                                // Increase maxLength to something large (e.g., 1000)
+                                param.args[1] = 1000;
                             }
                         }
                     }

@@ -27,6 +27,8 @@
     <string name="desc_feature_global_mode">Ép buộc nhận diện mọi ứng dụng là game</string>
     <string name="label_feature_hide_energy_cube">Ẩn Energy Cube Overlay</string>
     <string name="desc_feature_hide_energy_cube">Ẩn hiệu ứng Energy Cube khi khởi động game</string>
+    <string name="label_feature_watermark_length">Bỏ giới hạn độ dài Watermark</string>
+    <string name="desc_feature_watermark_length">Bỏ giới hạn độ dài watermark (Lên tới 1000)</string>
     <string name="msg_changes_instant">Thay đổi áp dụng ngay lập tức</string>
 
     <!-- Settings Items -->
@@ -39,7 +41,7 @@
     <string name="warning_need_root">Vui lòng bật "Sử dụng Root"</string>
     
     <string name="label_force_stop">Dừng ứng dụng khi Áp dụng</string>
-    <string name="desc_force_stop">Tự động dừng GameAssist để áp dụng thay đổi</string>
+    <string name="desc_force_stop">Tự động dừng ứng dụng được chọn để áp dụng thay đổi</string>
     
     <string name="label_language">Ngôn ngữ</string>
     <string name="label_version">Phiên bản</string>
@@ -47,6 +49,9 @@
     <string name="author_name">KhanhNguyen9872</string>
 
     <!-- Toasts / Feedback -->
-    <string name="msg_force_stop_applied">Đã dừng GameAssist để áp dụng</string>
+    <string name="msg_force_stop_applied">Đã áp dụng thay đổi</string>
+    <string name="msg_force_stop_helper">Đã dừng Game Helper để áp dụng</string>
+    <string name="msg_force_stop_space">Đã dừng Game Space để áp dụng</string>
+    <string name="msg_force_stop_both">Đã dừng các ứng dụng để áp dụng</string>
     <string name="msg_restart_required">Khởi động lại app để áp dụng</string>
 </resources>
