@@ -128,8 +128,18 @@ public class MainActivity extends Activity {
         });
 
         switchHideEnergyCube.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            prefs.edit().putBoolean(KEY_HIDE_ENERGY_CUBE, isChecked).apply();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean(KEY_HIDE_ENERGY_CUBE, isChecked);
+            if (isChecked) {
+                // Auto-enable Prevent Cleanup (No Kill)
+                editor.putBoolean(KEY_NOKILL_ENABLED, true);
+                if (switchNoKill != null) switchNoKill.setChecked(true);
+            }
+            editor.apply();
+            
             fixPermissions();
+            // Update UI to reflect locked state
+            updateFeatureState(switchGlobal.isChecked());
             forceStopPackage("cn.nubia.gameassist", R.string.msg_force_stop_helper, R.string.msg_reminder_force_stop_helper);
         });
 
@@ -211,8 +221,15 @@ public class MainActivity extends Activity {
         float alpha = active ? 1.0f : 0.4f;
 
         if (switchNoKill != null) {
-            switchNoKill.setEnabled(active);
-            switchNoKill.setAlpha(alpha);
+            // Check if Energy Cube is hidden - if so, lock No Kill to enabled
+            boolean hideEnergyCube = switchHideEnergyCube != null && switchHideEnergyCube.isChecked();
+            if (active && hideEnergyCube) {
+                switchNoKill.setEnabled(false); // Disable interaction
+                switchNoKill.setAlpha(0.5f);    // Grey out to indicate sealed state
+            } else {
+                switchNoKill.setEnabled(active);
+                switchNoKill.setAlpha(alpha);
+            }
         }
         if (switchGlobalMode != null) {
             switchGlobalMode.setEnabled(active);
