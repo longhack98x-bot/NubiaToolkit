@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Nubia Toolkit</string>
+    <string name="settings_super_resolution">显示超清画质</string>
+    <string name="settings_super_resolution_desc">超高清分辨率功能</string>
+    <string name="title_app">NUBIA TOOLKIT</string>
+    
+    <!-- Settings Activity -->
+    <string name="title_settings">设置</string>
+    <string name="btn_settings">设置</string>
+    
+    <!-- Status -->
+    <string name="status_checking">正在检查状态...</string>
+    <string name="status_error_xposed">⚠️ LSPosed 模块未激活</string>
+    <string name="status_hint_xposed">(请启用模块并重启)</string>
+    <string name="status_error_pkg_missing">⚠️ 未找到 GameAssist</string>
+    <string name="status_error_pkg_disabled">⚠️ GameAssist 已禁用</string>
+    <string name="status_error_space_pkg_missing">⚠️ 未找到 GameSpace</string>
+    <string name="status_error_space_pkg_disabled">⚠️ GameSpace 已禁用</string>
+    <string name="status_hint_enable">(请在设置中启用)</string>
+    
+    <!-- Feature: Global -->
+    <string name="label_global_enable">启用模块</string>
+    
+    <!-- Feature: NoKill -->
+    <!-- Feature Categories -->
+    <string name="title_category_game_helper">游戏助手</string>
+    <string name="title_category_game_space">游戏空间</string>
+    <string name="title_features">功能</string>
+    <string name="label_feature_nokill">防止自动清理</string>
+    <string name="desc_feature_nokill">防止打开游戏时自动清理后台应用</string>
+    <string name="label_feature_global_mode">全局游戏模式</string>
+    <string name="desc_feature_global_mode">强制识别所有应用为游戏</string>
+    <string name="label_feature_hide_energy_cube">隐藏能量方块</string>
+    <string name="desc_feature_hide_energy_cube">隐藏启动游戏时的能量方块动画</string>
+    <string name="label_feature_watermark_length">解锁水印长度</string>
+    <string name="desc_feature_watermark_length">解锁自定义水印长度限制（最多 1000 字符）</string>
+    <string name="msg_changes_instant">更改立即生效</string>
+
+    <!-- Settings Items -->
+    <string name="label_show_toasts">显示提示</string>
+    <string name="desc_show_toasts">钩子触发时显示反馈</string>
+
+    <string name="label_use_root">使用 Root 权限</string>
+    <string name="desc_use_root">需要 Root 权限的功能所必需</string>
+    <string name="desc_root_unavailable">未检测到 Root 权限</string>
+    <string name="warning_need_root">请启用「使用 Root 权限」</string>
+
+    <string name="label_force_stop">应用时强制停止</string>
+    <string name="desc_force_stop">自动停止应用程序以应用更改</string>
+
+    <string name="label_language">语言</string>
+    <string name="label_version">版本</string>
+    <string name="label_author">作者</string>
+    <string name="author_name">KhanhNguyen9872</string>
+
+    <!-- Toasts / Feedback -->
+    <string name="msg_force_stop_applied">更改已应用</string>
+    <string name="msg_force_stop_helper">已停止游戏助手以应用更改</string>
+    <string name="msg_force_stop_space">已停止游戏空间以应用更改</string>
+    <string name="msg_force_stop_both">已停止应用程序以应用更改</string>
+    <string name="msg_restart_required">重启应用以应用语言</string>
+    
+    <!-- Reminder Toasts (when Force Stop is disabled) -->
+    <string name="msg_reminder_force_stop_helper">请强制停止游戏助手以应用更改</string>
+    <string name="msg_reminder_force_stop_space">请强制停止游戏空间以应用更改</string>
+    <string name="msg_reminder_force_stop_both">请强制停止应用程序以应用更改</string>
+</resources>

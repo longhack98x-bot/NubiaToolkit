@@ -54,4 +54,9 @@
     <string name="msg_force_stop_space">Đã dừng Game Space để áp dụng</string>
     <string name="msg_force_stop_both">Đã dừng các ứng dụng để áp dụng</string>
     <string name="msg_restart_required">Khởi động lại app để áp dụng</string>
+    
+    <!-- Reminder Toasts (when Force Stop is disabled) -->
+    <string name="msg_reminder_force_stop_helper">Vui lòng buộc dừng Game Helper để áp dụng thay đổi</string>
+    <string name="msg_reminder_force_stop_space">Vui lòng buộc dừng Game Space để áp dụng thay đổi</string>
+    <string name="msg_reminder_force_stop_both">Vui lòng buộc dừng các ứng dụng để áp dụng thay đổi</string>
 </resources>

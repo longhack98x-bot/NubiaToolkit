@@ -124,15 +124,27 @@ public class SettingsActivity extends Activity {
     }
     
     private void updateDynamicLabels() {
-        // Only need to update the Language Value text (English vs Tiếng Việt)
+        // Only need to update the Language Value text (English vs Tiếng Việt vs 简体中文)
         // The rest of the UI (Titles, Descriptions) are handled automatically by Resources + LocaleHelper
         String code = LocaleHelper.getLanguage(this);
-        textLanguage.setText(code.equals("vi") ? "Tiếng Việt" : "English");
+        String displayName;
+        switch (code) {
+            case "vi":
+                displayName = "Tiếng Việt";
+                break;
+            case "zh":
+                displayName = "简体中文";
+                break;
+            default:
+                displayName = "English";
+                break;
+        }
+        textLanguage.setText(displayName);
     }
 
     private void showLanguageDialog() {
-        final String[] languages = {"English", "Tiếng Việt"};
-        final String[] codes = {"en", "vi"};
+        final String[] languages = {"English", "Tiếng Việt", "简体中文"};
+        final String[] codes = {"en", "vi", "zh"};
         
         new AlertDialog.Builder(this)
             .setTitle(R.string.label_language)
