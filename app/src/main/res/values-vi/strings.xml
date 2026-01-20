@@ -34,6 +34,7 @@
     <string name="label_use_root">Sử dụng Root</string>
     <string name="desc_use_root">Cần thiết cho tính năng cần quyền Root</string>
     <string name="desc_root_unavailable">Không tìm thấy quyền Root</string>
+    <string name="warning_need_root">Vui lòng bật "Sử dụng Root"</string>
     
     <string name="label_force_stop">Dừng ứng dụng khi Áp dụng</string>
     <string name="desc_force_stop">Tự động dừng GameAssist để áp dụng thay đổi</string>
