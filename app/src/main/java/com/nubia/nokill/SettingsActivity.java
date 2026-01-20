@@ -111,8 +111,13 @@ public class SettingsActivity extends Activity {
             btnBack.setOnClickListener(v -> finish());
         }
 
-        // Set Version
-        textVersion.setText("1.0");
+        // Set Version dynamically
+        try {
+            String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            textVersion.setText(versionName);
+        } catch (Exception e) {
+            textVersion.setText("1.0.0");
+        }
 
         // Update dynamic labels (only those that are not static in XML)
         updateDynamicLabels();
