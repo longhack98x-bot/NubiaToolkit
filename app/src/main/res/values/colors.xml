@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF3333</color> <!-- Nubia Red -->
+    <color name="colorPrimaryDark">#B30000</color>
+    <color name="colorAccent">#FF5252</color>
+    <color name="colorBackground">#121212</color> <!-- Deep Dark Background -->
+    <color name="colorSurface">#1E1E1E</color>  <!-- Card Surface -->
+    <color name="colorTextPrimary">#FFFFFF</color>
+    <color name="colorTextSecondary">#B0B0B0</color>
+    <color name="colorStatusOk">#4CAF50</color>
+    <color name="colorStatusError">#F44336</color>
+</resources>

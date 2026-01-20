@@ -1,0 +1,28 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace "com.nubia.nokill"
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.nubia.nokill"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
+
+dependencies {
+    compileOnly files('libs/api-82.jar')
+    compileOnly files('libs/api-82-sources.jar') // chỉ nếu bạn muốn code completion
+    // compileOnly 'de.robv.android.xposed:api:82'
+}

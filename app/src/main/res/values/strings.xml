@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Nubia Toolkit</string>
+    <string name="title_app">NUBIA TOOLKIT</string>
+    
+    <!-- Settings Activity -->
+    <string name="title_settings">Settings</string>
+    <string name="btn_settings">Settings</string>
+    
+    <!-- Status -->
+    <string name="status_checking">Checking status...</string>
+    <string name="status_error_xposed">⚠️ Module NOT Active in LSPosed</string>
+    <string name="status_hint_xposed">(Enable module and reboot)</string>
+    <string name="status_error_pkg_missing">⚠️ GameAssist App NOT Found</string>
+    <string name="status_error_pkg_disabled">⚠️ GameAssist App is DISABLED</string>
+    <string name="status_hint_enable">(Please enable it in Settings)</string>
+    
+    <!-- Feature: Global -->
+    <string name="label_global_enable">Enable Module</string>
+    
+    <!-- Feature: NoKill -->
+    <string name="title_features">FEATURES</string>
+    <string name="label_feature_nokill">Prevent Automatic Cleaning</string>
+    <string name="desc_feature_nokill">Prevents automatic killing of background apps when opening games</string>
+    <string name="label_feature_global_mode">Global Game Mode</string>
+    <string name="desc_feature_global_mode">Forces to recognize all apps as games</string>
+    <string name="msg_changes_instant">Changes apply instantly</string>
+
+    <!-- Settings Items -->
+    <string name="label_show_toasts">Show Toasts</string>
+    <string name="desc_show_toasts">Show feedback when hook triggers</string>
+    
+    <string name="label_use_root">Use Root Access</string>
+    <string name="desc_use_root">Required for Force Stop and advanced features</string>
+    <string name="desc_root_unavailable">Root access not detected</string>
+    <string name="warning_need_root">Cần bật "Sử dụng Root"</string>
+    
+    <string name="label_force_stop">Force Stop on Apply</string>
+    <string name="desc_force_stop">Automatically stop GameAssist to apply changes</string>
+    
+    <string name="label_language">Language</string>
+    <string name="label_version">Version</string>
+    <string name="label_author">Author</string>
+    <string name="author_name">KhanhNguyen9872</string>
+
+    <!-- Toasts / Feedback -->
+    <string name="msg_force_stop_applied">GameAssist stopped to apply changes</string>
+    <string name="msg_restart_required">Restart app to apply language</string>
+</resources>

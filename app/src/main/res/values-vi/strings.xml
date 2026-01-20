@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Nubia Toolkit</string>
+    <string name="title_app">NUBIA TOOLKIT</string>
+    
+    <!-- Settings Activity -->
+    <string name="title_settings">Cài đặt</string>
+    <string name="btn_settings">Cài đặt</string>
+    
+    <!-- Status -->
+    <string name="status_checking">Đang kiểm tra...</string>
+    <string name="status_error_xposed">⚠️ Module LSPosed CHƯA hoạt động</string>
+    <string name="status_hint_xposed">(Hãy bật module và khởi động lại)</string>
+    <string name="status_error_pkg_missing">⚠️ Không tìm thấy GameAssist</string>
+    <string name="status_error_pkg_disabled">⚠️ GameAssist đang bị TẮT</string>
+    <string name="status_hint_enable">(Hãy bật trong Cài đặt)</string>
+    
+    <!-- Feature: Global -->
+    <string name="label_global_enable">Bật Module</string>
+    
+    <!-- Feature: NoKill -->
+    <string name="title_features">TÍNH NĂNG</string>
+    <string name="label_feature_nokill">Ngăn chặn dọn dẹp</string>
+    <string name="desc_feature_nokill">Tránh việc đóng ứng dụng nền khi mở game</string>
+    <string name="label_feature_global_mode">Chế độ Game Toàn Cầu</string>
+    <string name="desc_feature_global_mode">Ép buộc nhận diện mọi ứng dụng là game</string>
+    <string name="msg_changes_instant">Thay đổi áp dụng ngay lập tức</string>
+
+    <!-- Settings Items -->
+    <string name="label_show_toasts">Hiện Thông Báo</string>
+    <string name="desc_show_toasts">Hiện thông báo khi chặn dọn dẹp</string>
+
+    <string name="label_use_root">Sử dụng Root</string>
+    <string name="desc_use_root">Cần thiết cho tính năng Dừng ứng dụng</string>
+    <string name="desc_root_unavailable">Không tìm thấy quyền Root</string>
+    
+    <string name="label_force_stop">Dừng ứng dụng khi Áp dụng</string>
+    <string name="desc_force_stop">Tự động dừng GameAssist để áp dụng thay đổi</string>
+    
+    <string name="label_language">Ngôn ngữ</string>
+    <string name="label_version">Phiên bản</string>
+    <string name="label_author">Tác giả</string>
+    <string name="author_name">KhanhNguyen9872</string>
+
+    <!-- Toasts / Feedback -->
+    <string name="msg_force_stop_applied">Đã dừng GameAssist để áp dụng</string>
+    <string name="msg_restart_required">Khởi động lại app để áp dụng</string>
+</resources>

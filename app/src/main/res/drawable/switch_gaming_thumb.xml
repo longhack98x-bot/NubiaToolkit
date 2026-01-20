@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <layer-list>
+            <!-- Shadow -->
+            <item android:top="2dp" android:left="2dp" android:right="2dp" android:bottom="2dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="4dp"/>
+                    <solid android:color="#40000000"/>
+                </shape>
+            </item>
+            <!-- Main Body -->
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="4dp"/>
+                    <solid android:color="#FF3333"/>
+                    <stroke android:width="1dp" android:color="#FF8A80"/>
+                    <size android:width="24dp" android:height="24dp"/>
+                </shape>
+            </item>
+            <!-- Grip Lines -->
+            <item android:width="2dp" android:height="12dp" android:gravity="center">
+                <shape android:shape="rectangle">
+                    <solid android:color="#B30000"/>
+                </shape>
+            </item>
+            <item android:width="2dp" android:height="12dp" android:gravity="center" android:right="6dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#B30000"/>
+                </shape>
+            </item>
+             <item android:width="2dp" android:height="12dp" android:gravity="center" android:left="6dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#B30000"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    
+    <item>
+        <layer-list>
+            <!-- Shadow -->
+             <item android:top="2dp" android:left="2dp" android:right="2dp" android:bottom="2dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="4dp"/>
+                    <solid android:color="#40000000"/>
+                </shape>
+            </item>
+            <!-- Main Body -->
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="4dp"/>
+                    <solid android:color="#E0E0E0"/>
+                    <stroke android:width="1dp" android:color="#BDBDBD"/>
+                    <size android:width="24dp" android:height="24dp"/>
+                </shape>
+            </item>
+             <!-- Grip Lines -->
+            <item android:width="2dp" android:height="12dp" android:gravity="center">
+                <shape android:shape="rectangle">
+                    <solid android:color="#9E9E9E"/>
+                </shape>
+            </item>
+               <item android:width="2dp" android:height="12dp" android:gravity="center" android:right="6dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#9E9E9E"/>
+                </shape>
+            </item>
+             <item android:width="2dp" android:height="12dp" android:gravity="center" android:left="6dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#9E9E9E"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

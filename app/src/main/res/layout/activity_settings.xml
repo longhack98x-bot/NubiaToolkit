@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:background="@drawable/bg_gaming_gradient"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="24dp">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_back"
+            android:tint="@color/colorTextPrimary"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/text_settings_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_settings"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextPrimary"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <!-- Show Toasts -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_gaming_card"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_toast"
+            android:layout_marginEnd="16dp"
+            android:tint="@color/colorTextPrimary"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/text_toast_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_show_toasts"
+                android:textSize="16sp"
+                android:textColor="@color/colorTextPrimary"/>
+            <TextView
+                android:id="@+id/text_toast_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/desc_show_toasts"
+                android:textSize="12sp"
+                android:textColor="@color/colorTextSecondary"/>
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/switch_show_toasts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/switch_gaming_thumb"
+            android:track="@drawable/switch_gaming_track"/>
+    </LinearLayout>
+
+    <!-- Use Root -->
+    <LinearLayout
+        android:id="@+id/card_use_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_gaming_card"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_root"
+            android:layout_marginEnd="16dp"
+            android:tint="@color/colorTextPrimary"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/text_use_root_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_use_root"
+                android:textSize="16sp"
+                android:textColor="@color/colorTextPrimary"/>
+            <TextView
+                android:id="@+id/text_use_root_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/desc_use_root"
+                android:textSize="12sp"
+                android:textColor="@color/colorTextSecondary"/>
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/switch_use_root"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/switch_gaming_thumb"
+            android:track="@drawable/switch_gaming_track"/>
+    </LinearLayout>
+
+    <!-- Force Stop on Apply -->
+    <LinearLayout
+        android:id="@+id/card_force_stop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_gaming_card"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_force_stop"
+            android:layout_marginEnd="16dp"
+            android:tint="@color/colorTextPrimary"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/text_force_stop_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_force_stop"
+                android:textSize="16sp"
+                android:textColor="@color/colorTextPrimary"/>
+            <TextView
+                android:id="@+id/text_force_stop_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/desc_force_stop"
+                android:textSize="12sp"
+                android:textColor="@color/colorTextSecondary"/>
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/switch_force_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/switch_gaming_thumb"
+            android:track="@drawable/switch_gaming_track"/>
+    </LinearLayout>
+
+    <!-- Language -->
+    <LinearLayout
+        android:id="@+id/card_language"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_gaming_card"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_language"
+            android:layout_marginEnd="16dp"
+            android:tint="@color/colorTextPrimary"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/text_lang_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_language"
+                android:textSize="16sp"
+                android:textColor="@color/colorTextPrimary"/>
+        </LinearLayout>
+        
+        <TextView
+            android:id="@+id/text_language_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="English"
+            android:textSize="14sp"
+            android:textColor="@color/colorTextSecondary"/>
+    </LinearLayout>
+
+    <!-- Version -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_gaming_card"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_info"
+            android:layout_marginEnd="16dp"
+            android:tint="@color/colorTextPrimary"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/label_version"
+            android:textSize="16sp"
+            android:textColor="@color/colorTextPrimary"/>
+        
+        <TextView
+            android:id="@+id/text_version_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.0"
+            android:textSize="14sp"
+            android:textColor="@color/colorTextSecondary"/>
+    </LinearLayout>
+
+    <!-- Author -->
+    <LinearLayout
+        android:id="@+id/card_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_gaming_card"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_github"
+            android:layout_marginEnd="16dp"
+            android:tint="@color/colorTextPrimary"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/text_author_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_author"
+                android:textSize="12sp"
+                android:textColor="@color/colorTextSecondary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/author_name"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorTextPrimary"/>
+        </LinearLayout>
+        
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@android:drawable/ic_menu_send"
+            android:tint="@color/colorTextSecondary"
+            android:rotation="-45"/>
+    </LinearLayout>
+
+</LinearLayout>
