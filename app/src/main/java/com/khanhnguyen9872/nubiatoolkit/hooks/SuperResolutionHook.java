@@ -12,15 +12,21 @@ public class SuperResolutionHook extends BaseHook {
     
     @Override
     public boolean shouldHook(LoadPackageParam lpparam) {
-        return lpparam.packageName.equals("cn.nubia.gameassist");
+        return lpparam.packageName.equals("cn.nubia.gameassist") || 
+               lpparam.packageName.equals("cn.nubia.gamelauncher");
     }
     
     @Override
     public void hook(LoadPackageParam lpparam) throws Throwable {
-        hookPluginUtils(lpparam);
-        hookSuperResolutionTypeDataManager(lpparam);
-        hookZteFeature(lpparam);
-        hookPluginConfig(lpparam);
+        if (lpparam.packageName.equals("cn.nubia.gameassist")) {
+            hookPluginUtils(lpparam);
+            hookSuperResolutionTypeDataManager(lpparam);
+            hookZteFeature(lpparam);
+            hookPluginConfig(lpparam);
+            hookUtils(lpparam);
+        } else if (lpparam.packageName.equals("cn.nubia.gamelauncher")) {
+            hookSuperResolutionHelper(lpparam);
+        }
     }
     
     /**
@@ -122,9 +128,9 @@ public class SuperResolutionHook extends BaseHook {
 
                             // Override default/unsupported values with "1" (supported)
                             if ("imageQuality".equals(type) && ("origin".equals(result) || result == null)) {
-                                param.setResult("1");
+                                 param.setResult("1");
                             } else if ("frameRate".equals(type) && ("frameRate_origin".equals(result) || result == null)) {
-                                param.setResult("1");
+                                 param.setResult("1");
                             }
                         }
                     }
@@ -143,6 +149,21 @@ public class SuperResolutionHook extends BaseHook {
                 "com.zte.gameassist.config.ZteFeature",
                 lpparam.classLoader,
                 "isSupportSuperResolution",
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) {
+                        Object[] settings = HookUtils.getSettings();
+                        if ((Boolean) settings[0] && (Boolean) settings[6]) {
+                            param.setResult(true);
+                        }
+                    }
+                });
+
+            // Hook isSupportSuperResolutionOld() -> true
+            XposedHelpers.findAndHookMethod(
+                "com.zte.gameassist.config.ZteFeature",
+                lpparam.classLoader,
+                "isSupportSuperResolutionOld",
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) {
@@ -182,6 +203,72 @@ public class SuperResolutionHook extends BaseHook {
                 });
         } catch (Throwable t) {
             XposedBridge.log("SuperResolutionHook: PluginConfig hook failed: " + t.getMessage());
+        }
+    }
+    
+    /**
+     * Hook SuperResolutionHelper.supportSuperResolutionByPkgName() -> true
+     */
+    private void hookSuperResolutionHelper(LoadPackageParam lpparam) {
+        try {
+            // Hook supportSuperResolutionByPkgName(String) -> true
+            XposedHelpers.findAndHookMethod(
+                "cn.nubia.gamelauncher.gamecontrolpanel.superresolution.SuperResolutionHelper",
+                lpparam.classLoader,
+                "supportSuperResolutionByPkgName",
+                String.class,
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) {
+                        Object[] settings = HookUtils.getSettings();
+                        if ((Boolean) settings[0] && (Boolean) settings[6]) {
+                            param.setResult(true);
+                        }
+                    }
+                });
+
+            // Hook ControlPanelFeatureHelper.getZteFeatureMagicSuperResolution() -> true
+            XposedHelpers.findAndHookMethod(
+                "cn.nubia.gamelauncher.gamecontrolpanel.utils.ControlPanelFeatureHelper",
+                lpparam.classLoader,
+                "getZteFeatureMagicSuperResolution",
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) {
+                        Object[] settings = HookUtils.getSettings();
+                        if ((Boolean) settings[0] && (Boolean) settings[6]) {
+                            param.setResult(true);
+                        }
+                    }
+                });
+
+        } catch (Throwable t) {
+            XposedBridge.log("SuperResolutionHook: GameLauncher hooks failed: " + t.getMessage());
+        }
+    }
+
+    /**
+     * Hook Utils.isSmallWindowOpen() -> false
+     * This prevents the "Please close float window first" toast.
+     */
+    private void hookUtils(LoadPackageParam lpparam) {
+        try {
+            XposedHelpers.findAndHookMethod(
+                "cn.nubia.gameassist.utils.Utils",
+                lpparam.classLoader,
+                "isSmallWindowOpen",
+                android.content.Context.class,
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) {
+                        Object[] settings = HookUtils.getSettings();
+                        if ((Boolean) settings[0] && (Boolean) settings[6]) {
+                            param.setResult(false);
+                        }
+                    }
+                });
+        } catch (Throwable t) {
+            XposedBridge.log("SuperResolutionHook: Utils hook failed: " + t.getMessage());
         }
     }
 }
