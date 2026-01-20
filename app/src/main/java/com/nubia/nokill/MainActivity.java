@@ -18,12 +18,14 @@ public class MainActivity extends Activity {
     private static final String KEY_GLOBAL_ENABLED = "pref_global_enabled";
     private static final String KEY_NOKILL_ENABLED = "pref_nokill_enabled";
     private static final String KEY_GLOBAL_MODE_ENABLED = "pref_global_mode_enabled";
+    private static final String KEY_HIDE_ENERGY_CUBE = "pref_hide_energy_cube";
     private static final String KEY_USE_ROOT = "pref_use_root";
     private static final String KEY_FORCE_STOP = "pref_force_stop_on_apply";
     
     private Switch switchGlobal;
     private Switch switchNoKill;
     private Switch switchGlobalMode;
+    private Switch switchHideEnergyCube;
     private TextView titleFeatures;
     private TextView descNoKill;
     private TextView descGlobalMode;
@@ -47,6 +49,7 @@ public class MainActivity extends Activity {
         switchGlobal = findViewById(R.id.switch_global_enable);
         switchNoKill = findViewById(R.id.switch_feature_nokill);
         switchGlobalMode = findViewById(R.id.switch_feature_global_mode);
+        switchHideEnergyCube = findViewById(R.id.switch_feature_hide_energy_cube);
         titleFeatures = findViewById(R.id.title_feature_nokill);
         descNoKill = findViewById(R.id.desc_feature_nokill);
         descGlobalMode = findViewById(R.id.desc_feature_global_mode);
@@ -59,10 +62,12 @@ public class MainActivity extends Activity {
         boolean isGlobalEnabled = prefs.getBoolean(KEY_GLOBAL_ENABLED, true);
         boolean isNoKillEnabled = prefs.getBoolean(KEY_NOKILL_ENABLED, true);
         boolean isGlobalModeEnabled = prefs.getBoolean(KEY_GLOBAL_MODE_ENABLED, false);
+        boolean isHideEnergyCubeEnabled = prefs.getBoolean(KEY_HIDE_ENERGY_CUBE, false);
 
         switchGlobal.setChecked(isGlobalEnabled);
         switchNoKill.setChecked(isNoKillEnabled);
         switchGlobalMode.setChecked(isGlobalModeEnabled);
+        switchHideEnergyCube.setChecked(isHideEnergyCubeEnabled);
         
         // Apply initial visual state
         updateFeatureState(isGlobalEnabled);
@@ -84,6 +89,12 @@ public class MainActivity extends Activity {
 
         switchGlobalMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             prefs.edit().putBoolean(KEY_GLOBAL_MODE_ENABLED, isChecked).apply();
+            fixPermissions();
+            killGameAssist();
+        });
+
+        switchHideEnergyCube.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            prefs.edit().putBoolean(KEY_HIDE_ENERGY_CUBE, isChecked).apply();
             fixPermissions();
             killGameAssist();
         });
@@ -137,6 +148,8 @@ public class MainActivity extends Activity {
         float alpha = isEnabled ? 1.0f : 0.4f;
         switchNoKill.setAlpha(alpha);
         switchGlobalMode.setAlpha(alpha);
+        switchHideEnergyCube.setEnabled(isEnabled);
+        switchHideEnergyCube.setAlpha(alpha);
         titleFeatures.setAlpha(alpha);
         descNoKill.setAlpha(alpha);
         descGlobalMode.setAlpha(alpha);

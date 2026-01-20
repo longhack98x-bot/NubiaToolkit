@@ -16,6 +16,7 @@ public class SettingsProvider extends ContentProvider {
     public static final String KEY_NOKILL = "pref_nokill_enabled";
     public static final String KEY_SHOW_TOAST = "pref_show_toasts";
     public static final String KEY_GLOBAL_MODE = "pref_global_mode_enabled";
+    public static final String KEY_HIDE_ENERGY_CUBE = "pref_hide_energy_cube";
     public static final String KEY_LANGUAGE = "pref_language";
     private static final String PREF_NAME = "com.nubia.nokill_preferences";
 
@@ -26,7 +27,7 @@ public class SettingsProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        MatrixCursor cursor = new MatrixCursor(new String[]{KEY_GLOBAL, KEY_NOKILL, KEY_SHOW_TOAST, KEY_LANGUAGE, KEY_GLOBAL_MODE});
+        MatrixCursor cursor = new MatrixCursor(new String[]{KEY_GLOBAL, KEY_NOKILL, KEY_SHOW_TOAST, KEY_LANGUAGE, KEY_GLOBAL_MODE, KEY_HIDE_ENERGY_CUBE});
         
         // Use standard context to read prefs
         SharedPreferences prefs = getContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -34,10 +35,11 @@ public class SettingsProvider extends ContentProvider {
         boolean nokill = prefs.getBoolean(KEY_NOKILL, true);
         boolean showToast = prefs.getBoolean(KEY_SHOW_TOAST, true);
         boolean globalMode = prefs.getBoolean(KEY_GLOBAL_MODE, false);
+        boolean hideEnergyCube = prefs.getBoolean(KEY_HIDE_ENERGY_CUBE, false);
         String language = prefs.getString("pref_language", "English");
         int langCode = language.equals("Tiếng Việt") ? 1 : 0;
 
-        cursor.addRow(new Object[]{global ? 1 : 0, nokill ? 1 : 0, showToast ? 1 : 0, langCode, globalMode ? 1 : 0});
+        cursor.addRow(new Object[]{global ? 1 : 0, nokill ? 1 : 0, showToast ? 1 : 0, langCode, globalMode ? 1 : 0, hideEnergyCube ? 1 : 0});
         return cursor;
     }
 

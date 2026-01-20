@@ -28,12 +28,13 @@ public class HookEntry implements IXposedHookLoadPackage {
         });
     }
 
-    // Helper to get settings: [global(bool), nokill(bool), showToast(bool), langCode(String)]
+    // Helper to get settings: [global(bool), nokill(bool), showToast(bool), langCode(String), globalMode(bool), hideEnergyCube(bool)]
     private Object[] getSettings() {
         boolean global = true; 
         boolean nokill = true;
         boolean showToast = true;
         boolean globalMode = false;
+        boolean hideEnergyCube = false;
         String langCode = "en";
         
         try {
@@ -49,13 +50,14 @@ public class HookEntry implements IXposedHookLoadPackage {
                     if (cursor.getColumnCount() > 2) showToast = cursor.getInt(2) == 1;
                     if (cursor.getColumnCount() > 3) langCode = cursor.getString(3);
                     if (cursor.getColumnCount() > 4) globalMode = cursor.getInt(4) == 1;
+                    if (cursor.getColumnCount() > 5) hideEnergyCube = cursor.getInt(5) == 1;
                     cursor.close();
                 }
             }
         } catch (Throwable t) {
             XposedBridge.log("NubiaNoKill: Failed to query provider: " + t.getMessage());
         }
-        return new Object[]{global, nokill, showToast, langCode, globalMode};
+        return new Object[]{global, nokill, showToast, langCode, globalMode, hideEnergyCube};
     }
     
     private String getLocalizedToast(String lang) {
@@ -211,5 +213,42 @@ public class HookEntry implements IXposedHookLoadPackage {
         } catch (Throwable t) {
             XposedBridge.log("NubiaNoKill: GameCheck(String, int) hook failed: " + t.getMessage());
         }
+
+        // Hook GameAssistLaunchTips.showTips() and auto-hide if from Energy Cube
+        try {
+            XposedHelpers.findAndHookMethod(
+                "cn.nubia.gameassist.tips.GameAssistLaunchTips",
+                lpparam.classLoader,
+                "showTips",
+                new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) {
+                        Object[] settings = getSettings();
+                        boolean globalEnabled = (Boolean) settings[0];
+                        boolean hideEnergyCube = (Boolean) settings[5];
+
+                        if (globalEnabled && hideEnergyCube) {
+                            try {
+                                Object tipsObj = param.getResult(); // This is the GameAssistLaunchTips object
+                                Boolean isFromCube = (Boolean) XposedHelpers.callMethod(tipsObj, "launchFromCube");
+                                
+                                if (isFromCube != null && isFromCube) {
+                                    // Immediately hide the tips by calling hideTips()
+                                    XposedHelpers.callMethod(tipsObj, "hideTips");
+                                    showToast("Energy Cube hidden!");
+                                    XposedBridge.log("NubiaNoKill: Auto-hidden Energy Cube overlay!");
+                                }
+                            } catch (Throwable t) {
+                                XposedBridge.log("NubiaNoKill: Error in showTips hook: " + t.getMessage());
+                                t.printStackTrace();
+                            }
+                        }
+                    }
+                });
+            XposedBridge.log("NubiaNoKill: ✓ GameAssistLaunchTips.showTips hook installed");
+        } catch (Throwable t) {
+            XposedBridge.log("NubiaNoKill: ✗ showTips hook FAILED: " + t.getMessage());
+        }
+
     }
 }

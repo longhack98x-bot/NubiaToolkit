@@ -23,6 +23,8 @@
     <string name="desc_feature_nokill">Prevents automatic killing of background apps when opening games</string>
     <string name="label_feature_global_mode">Global Game Mode</string>
     <string name="desc_feature_global_mode">Forces to recognize all apps as games</string>
+    <string name="label_feature_hide_energy_cube">Hide Energy Cube Overlay</string>
+    <string name="desc_feature_hide_energy_cube">Hides the Energy Cube animation when launching games</string>
     <string name="msg_changes_instant">Changes apply instantly</string>
 
     <!-- Settings Items -->
@@ -30,9 +32,9 @@
     <string name="desc_show_toasts">Show feedback when hook triggers</string>
     
     <string name="label_use_root">Use Root Access</string>
-    <string name="desc_use_root">Required for Force Stop and advanced features</string>
+    <string name="desc_use_root">Required for features that need Root</string>
     <string name="desc_root_unavailable">Root access not detected</string>
-    <string name="warning_need_root">Cần bật "Sử dụng Root"</string>
+    <string name="warning_need_root">Please enable "Use Root"</string>
     
     <string name="label_force_stop">Force Stop on Apply</string>
     <string name="desc_force_stop">Automatically stop GameAssist to apply changes</string>
