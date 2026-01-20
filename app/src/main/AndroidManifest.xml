@@ -11,7 +11,7 @@
             android:value="true"/>
         <meta-data
             android:name="xposeddescription"
-            android:value="Optimize GameAssist with No Kill, Global Game Mode, and Hide Energy Cube for Nubia devices."/>
+            android:value="Advanced toolkit for Nubia Game Assistant. Features: No Kill, Global Game Mode, Hide Energy Cube, Super Resolution, and Watermark Length unlock."/>
         <meta-data
             android:name="xposedminversion"
             android:value="82"/>
