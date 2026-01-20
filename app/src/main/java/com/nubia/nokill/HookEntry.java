@@ -214,40 +214,34 @@ public class HookEntry implements IXposedHookLoadPackage {
             XposedBridge.log("NubiaNoKill: GameCheck(String, int) hook failed: " + t.getMessage());
         }
 
-        // Hook GameAssistLaunchTips.showTips() and auto-hide if from Energy Cube
+        // Hook GameAssistLaunchTips.createAndShowTips() to block Energy Cube overlay creation
         try {
             XposedHelpers.findAndHookMethod(
                 "cn.nubia.gameassist.tips.GameAssistLaunchTips",
                 lpparam.classLoader,
-                "showTips",
+                "createAndShowTips",
+                android.content.Context.class,
+                android.os.Handler.class,
+                android.os.Handler.class,
+                String.class,
+                String.class,
+                java.util.List.class,
+                Runnable.class,
+                String.class, // launchWay
                 new XC_MethodHook() {
                     @Override
-                    protected void afterHookedMethod(MethodHookParam param) {
+                    protected void beforeHookedMethod(MethodHookParam param) {
                         Object[] settings = getSettings();
                         boolean globalEnabled = (Boolean) settings[0];
                         boolean hideEnergyCube = (Boolean) settings[5];
 
                         if (globalEnabled && hideEnergyCube) {
-                            try {
-                                Object tipsObj = param.getResult(); // This is the GameAssistLaunchTips object
-                                Boolean isFromCube = (Boolean) XposedHelpers.callMethod(tipsObj, "launchFromCube");
-                                
-                                if (isFromCube != null && isFromCube) {
-                                    // Immediately hide the tips by calling hideTips()
-                                    XposedHelpers.callMethod(tipsObj, "hideTips");
-                                    showToast("Energy Cube hidden!");
-                                    XposedBridge.log("NubiaNoKill: Auto-hidden Energy Cube overlay!");
-                                }
-                            } catch (Throwable t) {
-                                XposedBridge.log("NubiaNoKill: Error in showTips hook: " + t.getMessage());
-                                t.printStackTrace();
-                            }
+                            param.setResult(null);
                         }
                     }
                 });
-            XposedBridge.log("NubiaNoKill: ✓ GameAssistLaunchTips.showTips hook installed");
         } catch (Throwable t) {
-            XposedBridge.log("NubiaNoKill: ✗ showTips hook FAILED: " + t.getMessage());
+            XposedBridge.log("NubiaNoKill: createAndShowTips hook failed: " + t.getMessage());
         }
 
     }
