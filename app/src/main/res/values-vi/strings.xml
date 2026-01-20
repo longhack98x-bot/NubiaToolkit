@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Nubia Toolkit</string>
+    <string name="settings_super_resolution">Hiển thị Superior Pic Quality</string>
+    <string name="settings_super_resolution_desc">Tính năng độ phân giải siêu cao</string>
     <string name="title_app">NUBIA TOOLKIT</string>
     
     <!-- Settings Activity -->

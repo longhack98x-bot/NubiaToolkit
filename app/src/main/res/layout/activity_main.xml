@@ -170,6 +170,27 @@
             android:text="@string/desc_feature_hide_energy_cube"
             android:textColor="@color/colorTextSecondary"
             android:textSize="12sp"
+            android:layout_marginBottom="16dp"/>
+
+        <Switch
+            android:id="@+id/switch_feature_super_resolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_super_resolution"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="16sp"
+            android:checked="false"
+            android:thumb="@drawable/switch_gaming_thumb"
+            android:track="@drawable/switch_gaming_track"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/desc_feature_super_resolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_super_resolution_desc"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp"
             android:layout_marginBottom="0dp"/>
 
     </LinearLayout>

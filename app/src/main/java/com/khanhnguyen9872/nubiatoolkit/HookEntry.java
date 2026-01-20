@@ -28,13 +28,14 @@ public class HookEntry implements IXposedHookLoadPackage {
         });
     }
 
-    // Helper to get settings: [global(bool), nokill(bool), showToast(bool), langCode(String), globalMode(bool), hideEnergyCube(bool)]
+    // Helper to get settings: [global(bool), nokill(bool), showToast(bool), langCode(String), globalMode(bool), hideEnergyCube(bool), superResolution(bool)]
     private Object[] getSettings() {
         boolean global = true; 
         boolean nokill = true;
         boolean showToast = true;
         boolean globalMode = false;
         boolean hideEnergyCube = false;
+        boolean superResolution = false;
         String langCode = "en";
         
         try {
@@ -51,13 +52,14 @@ public class HookEntry implements IXposedHookLoadPackage {
                     if (cursor.getColumnCount() > 3) langCode = cursor.getString(3);
                     if (cursor.getColumnCount() > 4) globalMode = cursor.getInt(4) == 1;
                     if (cursor.getColumnCount() > 5) hideEnergyCube = cursor.getInt(5) == 1;
+                    if (cursor.getColumnCount() > 6) superResolution = cursor.getInt(6) == 1;
                     cursor.close();
                 }
             }
         } catch (Throwable t) {
             XposedBridge.log("NubiaNoKill: Failed to query provider: " + t.getMessage());
         }
-        return new Object[]{global, nokill, showToast, langCode, globalMode, hideEnergyCube};
+        return new Object[]{global, nokill, showToast, langCode, globalMode, hideEnergyCube, superResolution};
     }
     
     private String getLocalizedToast(String lang) {
@@ -147,15 +149,13 @@ public class HookEntry implements IXposedHookLoadPackage {
 
                                 if (globalEnabled && featureEnabled) {
                                     XposedBridge.log("NubiaNoKill: Intercepted OneMoreThingManager.kill");
-                                    // Optionally show toast if you want transparency, but users might find it annoying if it happens often.
-                                    // For now, silent block.
                                     param.setResult(null); 
                                 }
                             }
                         }
                     });
         } catch (Throwable t) {
-            XposedBridge.log("NubiaNoKill: OneMoreThingManager hook failed: " + t.getMessage());
+            // Ignored or logged if needed
         }
 
         // Hook GameCheck for Global Game Mode (Single Arg)
@@ -174,17 +174,14 @@ public class HookEntry implements IXposedHookLoadPackage {
 
                         if (globalEnabled && globalModeEnabled) {
                             param.setResult(true);
-                            // No toast here to avoid spam if called frequently, 
-                            // or maybe add a "once per app launch" logic?
-                            // For now, let's rely on the user seeing the GameAssist UI appear.
                         }
                     }
                 });
         } catch (Throwable t) {
-            XposedBridge.log("NubiaNoKill: GameCheck(String) hook failed: " + t.getMessage());
+             // Ignored
         }
 
-        // Hook GameCheck for Global Game Mode (Two Args) - The actual impl
+        // Hook GameCheck for Global Game Mode (Two Args) 
         try {
             XposedHelpers.findAndHookMethod(
                 "com.zte.gameassist.common.GameCheck",
@@ -198,20 +195,16 @@ public class HookEntry implements IXposedHookLoadPackage {
                         Object[] settings = getSettings();
                         boolean globalEnabled = (Boolean) settings[0];
                         boolean globalModeEnabled = (Boolean) settings[4];
-                        boolean showToastEnabled = (Boolean) settings[2];
-                        String lang = (String) settings[3];
+                        // boolean showToastEnabled = (Boolean) settings[2];
+                        // String lang = (String) settings[3];
 
                         if (globalEnabled && globalModeEnabled) {
                             param.setResult(true);
-                            // Toast removed as per user request
-                            // if (showToastEnabled) {
-                            //    showToast(getLocalizedGlobalToast(lang));
-                            // }
                         }
                     }
                 });
         } catch (Throwable t) {
-            XposedBridge.log("NubiaNoKill: GameCheck(String, int) hook failed: " + t.getMessage());
+             // Ignored
         }
 
         // Hook GameAssistLaunchTips.createAndShowTips() to block Energy Cube overlay creation
@@ -244,5 +237,179 @@ public class HookEntry implements IXposedHookLoadPackage {
             XposedBridge.log("NubiaNoKill: createAndShowTips hook failed: " + t.getMessage());
         }
 
+        // --- Super Resolution Hooks ---
+        
+        // Hook PluginUtils.getGfrcCapByPkg(String) to return 1 (supported)
+        try {
+            XposedHelpers.findAndHookMethod(
+                "cn.nubia.gameassist.plugin.PluginUtils",
+                lpparam.classLoader,
+                "getGfrcCapByPkg",
+                String.class,
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) {
+                        Object[] settings = getSettings();
+                        boolean globalEnabled = (Boolean) settings[0];
+                        boolean superResEnabled = (Boolean) settings[6];
+
+                        if (globalEnabled && superResEnabled) {
+                            param.setResult(1); // 1 = Supported
+                        }
+                    }
+                });
+
+            // Hook PluginUtils.isSupportResolutionOld() -> true
+            XposedHelpers.findAndHookMethod(
+                "cn.nubia.gameassist.plugin.PluginUtils",
+                lpparam.classLoader,
+                "isSupportResolutionOld",
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) {
+                        Object[] settings = getSettings();
+                        if ((Boolean) settings[0] && (Boolean) settings[6]) {
+                            param.setResult(true);
+                        }
+                    }
+                });
+
+            // Hook PluginUtils.isSupportResolutionSettingsInXml() -> true
+            XposedHelpers.findAndHookMethod(
+                "cn.nubia.gameassist.plugin.PluginUtils",
+                lpparam.classLoader,
+                "isSupportResolutionSettingsInXml",
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) {
+                        Object[] settings = getSettings();
+                        if ((Boolean) settings[0] && (Boolean) settings[6]) {
+                            param.setResult(true);
+                        }
+                    }
+                });
+
+             // Hook PluginUtils.supportResolution(String) -> true
+            XposedHelpers.findAndHookMethod(
+                "cn.nubia.gameassist.plugin.PluginUtils",
+                lpparam.classLoader,
+                "supportResolution",
+                String.class,
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) {
+                        Object[] settings = getSettings();
+                        if ((Boolean) settings[0] && (Boolean) settings[6]) {
+                            param.setResult(true);
+                        }
+                    }
+                });
+
+        } catch (Throwable t) {
+            XposedBridge.log("NubiaNoKill: PluginUtils hook failed: " + t.getMessage());
+        }
+
+        // Hook SuperResolutionTypeDataManager.getItem(String pkg, String type) to return "1" (supported)
+        try {
+            XposedHelpers.findAndHookMethod(
+                "cn.nubia.plugin.superresolution.SuperResolutionTypeDataManager",
+                lpparam.classLoader,
+                "getItem",
+                String.class,
+                String.class,
+                new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) {
+                        Object[] settings = getSettings();
+                        boolean globalEnabled = (Boolean) settings[0];
+                        boolean superResEnabled = (Boolean) settings[6];
+
+                        if (globalEnabled && superResEnabled) {
+                            String pkg = (String) param.args[0];
+                            String type = (String) param.args[1];
+                            String result = (String) param.getResult();
+
+                            // If result is null or "origin" or "frameRate_origin" (which mean unsupported/off), override it.
+                            // Based on smali: "imageQuality" expects "1" or "2" for high/super? 
+                            // "frameRate" expects "1"? 
+                            // Actually, let's look at smali again.
+                            // getItem returns "origin" or "frameRate_origin" if not found.
+                            // If found, it returns the value stored.
+                            
+                            // We want to pretend the device SUPPORTS these modes.
+                            // Usually "1" implies supported/on in these Nubia plugins.
+                            
+                            // Wait, getItem in smali returns the current SETTING value for that package? 
+                            // Or the CAPABILITY?
+                            // Smali: 
+                            // public getItem(String pkg, String type) { ... return itemData.getImageQualityItem() or getFrameRateItem() ... }
+                            // If invalid, returns "origin" (0) or "frameRate_origin".
+                            
+                            // If this manages the SELECTION state, forcing it might lock it to ON.
+                            // If this manages the CAPABILITY/AVAILABLE OPTIONS, forcing it enables the UI.
+                            
+                            // Let's assume this is the stored configuration. 
+                            // If the list is empty (because loadList found nothing), getItem returns default.
+                            // The Controller likely calls this to see "what is the current state" or "supports what".
+                            
+                            // Let's try forcing a return of "1" (which usually means enabled/supported level 1).
+                            // But better logic: check if it's "imageQuality" or "frameRate".
+                            
+                            if ("imageQuality".equals(type) && ("origin".equals(result) || result == null)) {
+                                param.setResult("1");
+                            } else if ("frameRate".equals(type) && ("frameRate_origin".equals(result) || result == null)) {
+                                param.setResult("1");
+                            }
+                        }
+                    }
+                });
+        } catch (Throwable t) {
+            XposedBridge.log("NubiaNoKill: SuperResolutionTypeDataManager hook failed: " + t.getMessage());
+        }
+
+        // --- New Hooks for Tile Registration ---
+        
+        // Hook ZteFeature.isSupportSuperResolution() -> true
+        try {
+            XposedHelpers.findAndHookMethod(
+                "com.zte.gameassist.config.ZteFeature",
+                lpparam.classLoader,
+                "isSupportSuperResolution",
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) {
+                         Object[] settings = getSettings();
+                        if ((Boolean) settings[0] && (Boolean) settings[6]) {
+                            param.setResult(true);
+                        }
+                    }
+                });
+        } catch (Throwable t) {
+             XposedBridge.log("NubiaNoKill: ZteFeature hook failed: " + t.getMessage());
+        }
+
+        // Hook PluginConfig.isPluginEnable to force return true for "super_resolution"
+        try {
+            XposedHelpers.findAndHookMethod(
+                "cn.nubia.gameassist.plugin.config.PluginConfig",
+                lpparam.classLoader,
+                "isPluginEnable",
+                android.content.Context.class,
+                String.class,
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) {
+                        String pluginName = (String) param.args[1];
+                        if ("super_resolution".equals(pluginName) || "super_resolution_old".equals(pluginName)) {
+                             Object[] settings = getSettings();
+                            if ((Boolean) settings[0] && (Boolean) settings[6]) {
+                                param.setResult(true);
+                            }
+                        }
+                    }
+                });
+        } catch (Throwable t) {
+             XposedBridge.log("NubiaNoKill: PluginConfig hook failed: " + t.getMessage());
+        }
     }
 }

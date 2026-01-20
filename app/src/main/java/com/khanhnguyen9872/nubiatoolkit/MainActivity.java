@@ -19,6 +19,7 @@ public class MainActivity extends Activity {
     private static final String KEY_NOKILL_ENABLED = "pref_nokill_enabled";
     private static final String KEY_GLOBAL_MODE_ENABLED = "pref_global_mode_enabled";
     private static final String KEY_HIDE_ENERGY_CUBE = "pref_hide_energy_cube";
+    private static final String KEY_SUPER_RESOLUTION = "pref_super_resolution_enabled";
     private static final String KEY_USE_ROOT = "pref_use_root";
     private static final String KEY_FORCE_STOP = "pref_force_stop_on_apply";
     
@@ -26,7 +27,8 @@ public class MainActivity extends Activity {
     private Switch switchNoKill;
     private Switch switchGlobalMode;
     private Switch switchHideEnergyCube;
-    private TextView titleFeatures;
+    private Switch switchSuperResolution;
+    private TextView titleFeatures;;
     private TextView descNoKill;
     private TextView descGlobalMode;
     private TextView textStatus;
@@ -53,6 +55,8 @@ public class MainActivity extends Activity {
         titleFeatures = findViewById(R.id.title_feature_nokill);
         descNoKill = findViewById(R.id.desc_feature_nokill);
         descGlobalMode = findViewById(R.id.desc_feature_global_mode);
+        switchSuperResolution = findViewById(R.id.switch_feature_super_resolution);
+        TextView descSuperResolution = findViewById(R.id.desc_feature_super_resolution);
         textStatus = findViewById(R.id.text_status);
         
         final SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -63,11 +67,13 @@ public class MainActivity extends Activity {
         boolean isNoKillEnabled = prefs.getBoolean(KEY_NOKILL_ENABLED, true);
         boolean isGlobalModeEnabled = prefs.getBoolean(KEY_GLOBAL_MODE_ENABLED, false);
         boolean isHideEnergyCubeEnabled = prefs.getBoolean(KEY_HIDE_ENERGY_CUBE, false);
+        boolean isSuperResolutionEnabled = prefs.getBoolean(KEY_SUPER_RESOLUTION, false);
 
         switchGlobal.setChecked(isGlobalEnabled);
         switchNoKill.setChecked(isNoKillEnabled);
         switchGlobalMode.setChecked(isGlobalModeEnabled);
         switchHideEnergyCube.setChecked(isHideEnergyCubeEnabled);
+        switchSuperResolution.setChecked(isSuperResolutionEnabled);
         
         // Apply initial visual state
         updateFeatureState(isGlobalEnabled);
@@ -95,6 +101,12 @@ public class MainActivity extends Activity {
 
         switchHideEnergyCube.setOnCheckedChangeListener((buttonView, isChecked) -> {
             prefs.edit().putBoolean(KEY_HIDE_ENERGY_CUBE, isChecked).apply();
+            fixPermissions();
+            killGameAssist();
+        });
+
+        switchSuperResolution.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            prefs.edit().putBoolean(KEY_SUPER_RESOLUTION, isChecked).apply();
             fixPermissions();
             killGameAssist();
         });
@@ -150,6 +162,13 @@ public class MainActivity extends Activity {
         switchGlobalMode.setAlpha(alpha);
         switchHideEnergyCube.setEnabled(isEnabled);
         switchHideEnergyCube.setAlpha(alpha);
+        
+        switchSuperResolution.setEnabled(isEnabled);
+        switchSuperResolution.setAlpha(alpha);
+        if (isEnabled) {
+             TextView descSuperResolution = findViewById(R.id.desc_feature_super_resolution);
+             if (descSuperResolution != null) descSuperResolution.setAlpha(alpha);
+        }
         titleFeatures.setAlpha(alpha);
         descNoKill.setAlpha(alpha);
         descGlobalMode.setAlpha(alpha);
