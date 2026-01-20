@@ -29,6 +29,8 @@
     <string name="desc_feature_hide_energy_cube">Ẩn hiệu ứng Energy Cube khi khởi động game</string>
     <string name="label_feature_watermark_length">Bỏ giới hạn độ dài Watermark</string>
     <string name="desc_feature_watermark_length">Bỏ giới hạn độ dài watermark (Lên tới 1000)</string>
+    <string name="label_feature_small_window">Mở khóa cửa sổ nhỏ</string>
+    <string name="desc_feature_small_window">Cho phép mở tất cả ứng dụng trong cửa sổ nhỏ</string>
     <string name="msg_changes_instant">Thay đổi áp dụng ngay lập tức</string>
 
     <!-- Settings Items -->

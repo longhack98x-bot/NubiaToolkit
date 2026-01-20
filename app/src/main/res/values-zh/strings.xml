@@ -35,6 +35,8 @@
     <string name="desc_feature_hide_energy_cube">隐藏启动游戏时的能量方块动画</string>
     <string name="label_feature_watermark_length">解锁水印长度</string>
     <string name="desc_feature_watermark_length">解锁自定义水印长度限制（最多 1000 字符）</string>
+    <string name="label_feature_small_window">解锁小窗</string>
+    <string name="desc_feature_small_window">允许将所有应用程序打开为小窗口</string>
     <string name="msg_changes_instant">更改立即生效</string>
 
     <!-- Settings Items -->

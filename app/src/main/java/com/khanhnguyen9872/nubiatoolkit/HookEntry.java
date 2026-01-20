@@ -26,6 +26,7 @@ public class HookEntry implements IXposedHookLoadPackage {
         hooks.add(new HideEnergyCubeHook());
         hooks.add(new SuperResolutionHook());
         hooks.add(new WatermarkLengthHook());
+        hooks.add(new SmallWindowHook());
     }
     
     @Override

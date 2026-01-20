@@ -17,7 +17,7 @@ public class HookUtils {
     /**
      * Get settings from the provider.
      * @return Object array: [global(bool), nokill(bool), showToast(bool), langCode(String), 
-     *                        globalMode(bool), hideEnergyCube(bool), superResolution(bool), watermarkLength(bool)]
+     *                        globalMode(bool), hideEnergyCube(bool), superResolution(bool), watermarkLength(bool), smallWindow(bool)]
      */
     public static Object[] getSettings() {
         boolean global = true; 
@@ -27,6 +27,7 @@ public class HookUtils {
         boolean hideEnergyCube = false;
         boolean superResolution = false;
         boolean watermarkLength = false;
+        boolean smallWindow = false;
         String langCode = "en";
         
         try {
@@ -45,13 +46,14 @@ public class HookUtils {
                     if (cursor.getColumnCount() > 5) hideEnergyCube = cursor.getInt(5) == 1;
                     if (cursor.getColumnCount() > 6) superResolution = cursor.getInt(6) == 1;
                     if (cursor.getColumnCount() > 7) watermarkLength = cursor.getInt(7) == 1;
+                    if (cursor.getColumnCount() > 8) smallWindow = cursor.getInt(8) == 1;
                     cursor.close();
                 }
             }
         } catch (Throwable t) {
             XposedBridge.log("NubiaToolkit: Failed to query provider: " + t.getMessage());
         }
-        return new Object[]{global, nokill, showToast, langCode, globalMode, hideEnergyCube, superResolution, watermarkLength};
+        return new Object[]{global, nokill, showToast, langCode, globalMode, hideEnergyCube, superResolution, watermarkLength, smallWindow};
     }
     
     /**

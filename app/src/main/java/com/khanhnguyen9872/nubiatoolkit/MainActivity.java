@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
     private static final String KEY_HIDE_ENERGY_CUBE = "pref_hide_energy_cube";
     private static final String KEY_SUPER_RESOLUTION = "pref_super_resolution_enabled";
     private static final String KEY_WATERMARK_LENGTH = "pref_watermark_length_enabled";
+    private static final String KEY_SMALL_WINDOW = "pref_small_window_enabled";
     private static final String KEY_USE_ROOT = "pref_use_root";
     private static final String KEY_FORCE_STOP = "pref_force_stop_on_apply";
     
@@ -31,6 +32,7 @@ public class MainActivity extends Activity {
     private Switch switchHideEnergyCube;
     private Switch switchSuperResolution;
     private Switch switchWatermarkLength;
+    private Switch switchSmallWindow;
     private TextView titleGameHelper;
     private TextView titleGameSpace;
     private ImageView imgGameHelper;
@@ -40,6 +42,7 @@ public class MainActivity extends Activity {
     private TextView descHideEnergyCube;
     private TextView descSuperResolution;
     private TextView descWatermarkLength;
+    private TextView descSmallWindow;
     private TextView textStatus;
     private TextView textStatusHelper;
     private TextView textStatusSpace;
@@ -72,8 +75,10 @@ public class MainActivity extends Activity {
         descHideEnergyCube = findViewById(R.id.desc_feature_hide_energy_cube);
         descSuperResolution = findViewById(R.id.desc_feature_super_resolution);
         descWatermarkLength = findViewById(R.id.desc_feature_watermark_length);
+        descSmallWindow = findViewById(R.id.desc_feature_small_window);
         switchSuperResolution = findViewById(R.id.switch_feature_super_resolution);
         switchWatermarkLength = findViewById(R.id.switch_feature_watermark_length);
+        switchSmallWindow = findViewById(R.id.switch_feature_small_window);
         textStatus = findViewById(R.id.text_status);
         textStatusHelper = findViewById(R.id.text_status_helper);
         textStatusSpace = findViewById(R.id.text_status_space);
@@ -88,6 +93,7 @@ public class MainActivity extends Activity {
         boolean isHideEnergyCubeEnabled = prefs.getBoolean(KEY_HIDE_ENERGY_CUBE, false);
         boolean isSuperResolutionEnabled = prefs.getBoolean(KEY_SUPER_RESOLUTION, false);
         boolean isWatermarkLengthEnabled = prefs.getBoolean(KEY_WATERMARK_LENGTH, false);
+        boolean isSmallWindowEnabled = prefs.getBoolean(KEY_SMALL_WINDOW, false);
 
         switchGlobal.setChecked(isGlobalEnabled);
         switchNoKill.setChecked(isNoKillEnabled);
@@ -95,6 +101,7 @@ public class MainActivity extends Activity {
         switchHideEnergyCube.setChecked(isHideEnergyCubeEnabled);
         switchSuperResolution.setChecked(isSuperResolutionEnabled);
         switchWatermarkLength.setChecked(isWatermarkLengthEnabled);
+        switchSmallWindow.setChecked(isSmallWindowEnabled);
         
         // Apply initial visual state
         updateFeatureState(isGlobalEnabled);
@@ -136,6 +143,12 @@ public class MainActivity extends Activity {
             prefs.edit().putBoolean(KEY_WATERMARK_LENGTH, isChecked).apply();
             fixPermissions();
             forceStopPackage("cn.nubia.gamelauncher", R.string.msg_force_stop_space, R.string.msg_reminder_force_stop_space);
+        });
+
+        switchSmallWindow.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            prefs.edit().putBoolean(KEY_SMALL_WINDOW, isChecked).apply();
+            fixPermissions();
+            forceStopPackage("cn.nubia.gameassist", R.string.msg_force_stop_helper, R.string.msg_reminder_force_stop_helper);
         });
 
         findViewById(R.id.btn_settings).setOnClickListener(v -> {
@@ -213,6 +226,10 @@ public class MainActivity extends Activity {
             switchSuperResolution.setEnabled(active);
             switchSuperResolution.setAlpha(alpha);
         }
+        if (switchSmallWindow != null) {
+            switchSmallWindow.setEnabled(active);
+            switchSmallWindow.setAlpha(alpha);
+        }
         
         if (titleGameHelper != null) titleGameHelper.setAlpha(alpha);
         if (imgGameHelper != null) imgGameHelper.setAlpha(alpha);
@@ -220,6 +237,7 @@ public class MainActivity extends Activity {
         if (descGlobalMode != null) descGlobalMode.setAlpha(alpha);
         if (descHideEnergyCube != null) descHideEnergyCube.setAlpha(alpha);
         if (descSuperResolution != null) descSuperResolution.setAlpha(alpha);
+        if (descSmallWindow != null) descSmallWindow.setAlpha(alpha);
     }
 
     private void updateSpaceGroup(boolean globalActive, boolean categoryActive) {

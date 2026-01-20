@@ -34,6 +34,8 @@
     <string name="desc_feature_hide_energy_cube">Hides the Energy Cube animation when launching games</string>
     <string name="label_feature_watermark_length">Unlock Watermark Length</string>
     <string name="desc_feature_watermark_length">Unlock custom watermark length limit (Up to 1000)</string>
+    <string name="label_feature_small_window">Unlock Small Window</string>
+    <string name="desc_feature_small_window">Allows opening all applications in a small window</string>
     <string name="msg_changes_instant">Changes apply instantly</string>
 
     <!-- Settings Items -->
