@@ -10,6 +10,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.content.Context;
 import android.graphics.Color;
+import android.widget.ImageView;
 import java.io.File;
 
 public class MainActivity extends Activity {
@@ -20,6 +21,7 @@ public class MainActivity extends Activity {
     private static final String KEY_GLOBAL_MODE_ENABLED = "pref_global_mode_enabled";
     private static final String KEY_HIDE_ENERGY_CUBE = "pref_hide_energy_cube";
     private static final String KEY_SUPER_RESOLUTION = "pref_super_resolution_enabled";
+    private static final String KEY_WATERMARK_LENGTH = "pref_watermark_length_enabled";
     private static final String KEY_USE_ROOT = "pref_use_root";
     private static final String KEY_FORCE_STOP = "pref_force_stop_on_apply";
     
@@ -28,10 +30,19 @@ public class MainActivity extends Activity {
     private Switch switchGlobalMode;
     private Switch switchHideEnergyCube;
     private Switch switchSuperResolution;
-    private TextView titleFeatures;;
+    private Switch switchWatermarkLength;
+    private TextView titleGameHelper;
+    private TextView titleGameSpace;
+    private ImageView imgGameHelper;
+    private ImageView imgGameSpace;
     private TextView descNoKill;
     private TextView descGlobalMode;
+    private TextView descHideEnergyCube;
+    private TextView descSuperResolution;
+    private TextView descWatermarkLength;
     private TextView textStatus;
+    private TextView textStatusHelper;
+    private TextView textStatusSpace;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -52,12 +63,20 @@ public class MainActivity extends Activity {
         switchNoKill = findViewById(R.id.switch_feature_nokill);
         switchGlobalMode = findViewById(R.id.switch_feature_global_mode);
         switchHideEnergyCube = findViewById(R.id.switch_feature_hide_energy_cube);
-        titleFeatures = findViewById(R.id.title_feature_nokill);
+        titleGameHelper = findViewById(R.id.title_category_game_helper);
+        titleGameSpace = findViewById(R.id.title_category_game_space);
+        imgGameHelper = findViewById(R.id.img_category_game_helper);
+        imgGameSpace = findViewById(R.id.img_category_game_space);
         descNoKill = findViewById(R.id.desc_feature_nokill);
         descGlobalMode = findViewById(R.id.desc_feature_global_mode);
+        descHideEnergyCube = findViewById(R.id.desc_feature_hide_energy_cube);
+        descSuperResolution = findViewById(R.id.desc_feature_super_resolution);
+        descWatermarkLength = findViewById(R.id.desc_feature_watermark_length);
         switchSuperResolution = findViewById(R.id.switch_feature_super_resolution);
-        TextView descSuperResolution = findViewById(R.id.desc_feature_super_resolution);
+        switchWatermarkLength = findViewById(R.id.switch_feature_watermark_length);
         textStatus = findViewById(R.id.text_status);
+        textStatusHelper = findViewById(R.id.text_status_helper);
+        textStatusSpace = findViewById(R.id.text_status_space);
         
         final SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         fixPermissions();
@@ -68,12 +87,14 @@ public class MainActivity extends Activity {
         boolean isGlobalModeEnabled = prefs.getBoolean(KEY_GLOBAL_MODE_ENABLED, false);
         boolean isHideEnergyCubeEnabled = prefs.getBoolean(KEY_HIDE_ENERGY_CUBE, false);
         boolean isSuperResolutionEnabled = prefs.getBoolean(KEY_SUPER_RESOLUTION, false);
+        boolean isWatermarkLengthEnabled = prefs.getBoolean(KEY_WATERMARK_LENGTH, false);
 
         switchGlobal.setChecked(isGlobalEnabled);
         switchNoKill.setChecked(isNoKillEnabled);
         switchGlobalMode.setChecked(isGlobalModeEnabled);
         switchHideEnergyCube.setChecked(isHideEnergyCubeEnabled);
         switchSuperResolution.setChecked(isSuperResolutionEnabled);
+        switchWatermarkLength.setChecked(isWatermarkLengthEnabled);
         
         // Apply initial visual state
         updateFeatureState(isGlobalEnabled);
@@ -83,32 +104,38 @@ public class MainActivity extends Activity {
             prefs.edit().putBoolean(KEY_GLOBAL_ENABLED, isChecked).apply();
             fixPermissions();
             updateFeatureState(isChecked);
-            killGameAssist();
+            forceStopPackages("cn.nubia.gameassist", "cn.nubia.gamelauncher");
         });
 
         // Feature Toggle Listener
         switchNoKill.setOnCheckedChangeListener((buttonView, isChecked) -> {
             prefs.edit().putBoolean(KEY_NOKILL_ENABLED, isChecked).apply();
             fixPermissions();
-            killGameAssist();
+            forceStopPackage("cn.nubia.gameassist");
         });
 
         switchGlobalMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             prefs.edit().putBoolean(KEY_GLOBAL_MODE_ENABLED, isChecked).apply();
             fixPermissions();
-            killGameAssist();
+            forceStopPackage("cn.nubia.gameassist");
         });
 
         switchHideEnergyCube.setOnCheckedChangeListener((buttonView, isChecked) -> {
             prefs.edit().putBoolean(KEY_HIDE_ENERGY_CUBE, isChecked).apply();
             fixPermissions();
-            killGameAssist();
+            forceStopPackage("cn.nubia.gameassist");
         });
 
         switchSuperResolution.setOnCheckedChangeListener((buttonView, isChecked) -> {
             prefs.edit().putBoolean(KEY_SUPER_RESOLUTION, isChecked).apply();
             fixPermissions();
-            killGameAssist();
+            forceStopPackage("cn.nubia.gameassist");
+        });
+
+        switchWatermarkLength.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            prefs.edit().putBoolean(KEY_WATERMARK_LENGTH, isChecked).apply();
+            fixPermissions();
+            forceStopPackage("cn.nubia.gamelauncher");
         });
 
         findViewById(R.id.btn_settings).setOnClickListener(v -> {
@@ -130,7 +157,11 @@ public class MainActivity extends Activity {
         checkStatus(); 
     }
 
-    private void killGameAssist() {
+    private void forceStopPackage(String packageName) {
+        forceStopPackages(packageName);
+    }
+
+    private void forceStopPackages(String... packageNames) {
         new Thread(() -> {
             try {
                 SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -138,9 +169,10 @@ public class MainActivity extends Activity {
                 boolean forceStop = prefs.getBoolean(KEY_FORCE_STOP, false);
 
                 if (useRoot && forceStop) {
-                    // Requires Root
-                    Process p = Runtime.getRuntime().exec(new String[]{"su", "-c", "am force-stop cn.nubia.gameassist"});
-                    p.waitFor();
+                    for (String pkg : packageNames) {
+                        Process p = Runtime.getRuntime().exec(new String[]{"su", "-c", "am force-stop " + pkg});
+                        p.waitFor();
+                    }
                     runOnUiThread(() -> {
                         android.widget.Toast.makeText(MainActivity.this, 
                             R.string.msg_force_stop_applied, 
@@ -153,75 +185,128 @@ public class MainActivity extends Activity {
         }).start();
     }
 
-    private void updateFeatureState(boolean isEnabled) {
-        switchNoKill.setEnabled(isEnabled);
-        switchGlobalMode.setEnabled(isEnabled);
-        
-        float alpha = isEnabled ? 1.0f : 0.4f;
-        switchNoKill.setAlpha(alpha);
-        switchGlobalMode.setAlpha(alpha);
-        switchHideEnergyCube.setEnabled(isEnabled);
-        switchHideEnergyCube.setAlpha(alpha);
-        
-        switchSuperResolution.setEnabled(isEnabled);
-        switchSuperResolution.setAlpha(alpha);
-        if (isEnabled) {
-             TextView descSuperResolution = findViewById(R.id.desc_feature_super_resolution);
-             if (descSuperResolution != null) descSuperResolution.setAlpha(alpha);
+    private void updateHelperGroup(boolean globalActive, boolean categoryActive) {
+        boolean active = globalActive && categoryActive;
+        float alpha = active ? 1.0f : 0.4f;
+
+        if (switchNoKill != null) {
+            switchNoKill.setEnabled(active);
+            switchNoKill.setAlpha(alpha);
         }
-        titleFeatures.setAlpha(alpha);
-        descNoKill.setAlpha(alpha);
-        descGlobalMode.setAlpha(alpha);
+        if (switchGlobalMode != null) {
+            switchGlobalMode.setEnabled(active);
+            switchGlobalMode.setAlpha(alpha);
+        }
+        if (switchHideEnergyCube != null) {
+            switchHideEnergyCube.setEnabled(active);
+            switchHideEnergyCube.setAlpha(alpha);
+        }
+        if (switchSuperResolution != null) {
+            switchSuperResolution.setEnabled(active);
+            switchSuperResolution.setAlpha(alpha);
+        }
+        
+        if (titleGameHelper != null) titleGameHelper.setAlpha(alpha);
+        if (imgGameHelper != null) imgGameHelper.setAlpha(alpha);
+        if (descNoKill != null) descNoKill.setAlpha(alpha);
+        if (descGlobalMode != null) descGlobalMode.setAlpha(alpha);
+        if (descHideEnergyCube != null) descHideEnergyCube.setAlpha(alpha);
+        if (descSuperResolution != null) descSuperResolution.setAlpha(alpha);
+    }
+
+    private void updateSpaceGroup(boolean globalActive, boolean categoryActive) {
+        boolean active = globalActive && categoryActive;
+        float alpha = active ? 1.0f : 0.4f;
+
+        if (switchWatermarkLength != null) {
+            switchWatermarkLength.setEnabled(active);
+            switchWatermarkLength.setAlpha(alpha);
+        }
+        
+        if (titleGameSpace != null) titleGameSpace.setAlpha(alpha);
+        if (imgGameSpace != null) imgGameSpace.setAlpha(alpha);
+        if (descWatermarkLength != null) descWatermarkLength.setAlpha(alpha);
+    }
+
+    private void updateFeatureState(boolean isEnabled) {
+        checkStatus();
     }
     
-    // This method is hooked by HookEntry to return true if module is active
+    // Standard check for toolkit hook
     public boolean isModuleActive() {
         return false;
     }
 
+    // Granular checks (can be hooked to return true if module is active for these apps)
+    public boolean isHelperActive() {
+        return isModuleActive(); 
+    }
+
+    public boolean isSpaceActive() {
+        return isModuleActive();
+    }
+
     private void checkStatus() {
         boolean isXposedActive = isModuleActive();
-        boolean isGameAssistInstalled = false;
-        boolean isGameAssistEnabled = false;
-        
+        boolean isHelperActive = isHelperActive();
+        boolean isSpaceActive = isSpaceActive();
+
+        boolean isHelperInstalled = false;
+        boolean isHelperEnabled = false;
         try {
             android.content.pm.PackageInfo pi = getPackageManager().getPackageInfo("cn.nubia.gameassist", 0);
-            isGameAssistInstalled = true;
-            isGameAssistEnabled = pi.applicationInfo.enabled;
-        } catch (PackageManager.NameNotFoundException e) {
-            isGameAssistInstalled = false;
-        }
+            isHelperInstalled = true;
+            isHelperEnabled = pi.applicationInfo.enabled;
+        } catch (android.content.pm.PackageManager.NameNotFoundException ignored) {}
 
-        StringBuilder statusMsg = new StringBuilder();
-        boolean hasError = false;
+        boolean isSpaceInstalled = false;
+        boolean isSpaceEnabled = false;
+        try {
+            android.content.pm.PackageInfo pi = getPackageManager().getPackageInfo("cn.nubia.gamelauncher", 0);
+            isSpaceInstalled = true;
+            isSpaceEnabled = pi.applicationInfo.enabled;
+        } catch (android.content.pm.PackageManager.NameNotFoundException ignored) {}
+
+        // Reset visibility
+        if (textStatus != null) textStatus.setVisibility(View.GONE);
+        if (textStatusHelper != null) textStatusHelper.setVisibility(View.GONE);
+        if (textStatusSpace != null) textStatusSpace.setVisibility(View.GONE);
 
         if (!isXposedActive) {
-            statusMsg.append(getString(R.string.status_error_xposed)).append("\n");
-            statusMsg.append(getString(R.string.status_hint_xposed)).append("\n\n");
-            hasError = true;
+            if (textStatus != null) {
+                textStatus.setVisibility(View.VISIBLE);
+                textStatus.setText(getString(R.string.status_error_xposed) + "\n" + getString(R.string.status_hint_xposed));
+            }
+            switchGlobal.setEnabled(false);
+            switchGlobal.setAlpha(0.5f);
+            updateHelperGroup(false, false);
+            updateSpaceGroup(false, false);
+            return;
         }
 
-        if (!isGameAssistInstalled) {
-            statusMsg.append(getString(R.string.status_error_pkg_missing)).append("\n");
-            hasError = true;
-        } else if (!isGameAssistEnabled) {
-            statusMsg.append(getString(R.string.status_error_pkg_disabled)).append("\n");
-            statusMsg.append(getString(R.string.status_hint_enable)).append("\n\n");
-            hasError = true;
+        switchGlobal.setEnabled(true);
+        switchGlobal.setAlpha(1.0f);
+        boolean globalChecked = switchGlobal.isChecked();
+
+        // Check Helper Group
+        boolean helperValid = isHelperActive && isHelperInstalled && isHelperEnabled;
+        if (!helperValid && textStatusHelper != null) {
+            textStatusHelper.setVisibility(View.VISIBLE);
+            if (!isHelperInstalled) textStatusHelper.setText(R.string.status_error_pkg_missing);
+            else if (!isHelperEnabled) textStatusHelper.setText(R.string.status_error_pkg_disabled);
+            else textStatusHelper.setText(R.string.status_error_xposed);
         }
-        
-        if (!hasError) {
-             textStatus.setVisibility(View.GONE);
-             switchGlobal.setEnabled(true);
-             switchGlobal.setAlpha(1.0f);
-             updateFeatureState(switchGlobal.isChecked());
-        } else {
-             textStatus.setVisibility(View.VISIBLE);
-             textStatus.setText(statusMsg.toString().trim());
-             switchGlobal.setEnabled(false);
-             switchGlobal.setAlpha(0.5f);
-             updateFeatureState(false);
+        updateHelperGroup(globalChecked, helperValid);
+
+        // Check Space Group
+        boolean spaceValid = isSpaceActive && isSpaceInstalled && isSpaceEnabled;
+        if (!spaceValid && textStatusSpace != null) {
+            textStatusSpace.setVisibility(View.VISIBLE);
+            if (!isSpaceInstalled) textStatusSpace.setText(R.string.status_error_space_pkg_missing);
+            else if (!isSpaceEnabled) textStatusSpace.setText(R.string.status_error_space_pkg_disabled);
+            else textStatusSpace.setText(R.string.status_error_xposed);
         }
+        updateSpaceGroup(globalChecked, spaceValid);
     }
 
     private void fixPermissions() {

@@ -14,12 +14,17 @@
     <string name="status_hint_xposed">(Enable module and reboot)</string>
     <string name="status_error_pkg_missing">⚠️ GameAssist App NOT Found</string>
     <string name="status_error_pkg_disabled">⚠️ GameAssist App is DISABLED</string>
+    <string name="status_error_space_pkg_missing">⚠️ GameSpace App NOT Found</string>
+    <string name="status_error_space_pkg_disabled">⚠️ GameSpace App is DISABLED</string>
     <string name="status_hint_enable">(Please enable it in Settings)</string>
     
     <!-- Feature: Global -->
     <string name="label_global_enable">Enable Module</string>
     
     <!-- Feature: NoKill -->
+    <!-- Feature Categories -->
+    <string name="title_category_game_helper">GAME HELPER</string>
+    <string name="title_category_game_space">GAME SPACE</string>
     <string name="title_features">FEATURES</string>
     <string name="label_feature_nokill">Prevent Automatic Cleaning</string>
     <string name="desc_feature_nokill">Prevents automatic killing of background apps when opening games</string>
@@ -27,6 +32,8 @@
     <string name="desc_feature_global_mode">Forces to recognize all apps as games</string>
     <string name="label_feature_hide_energy_cube">Hide Energy Cube Overlay</string>
     <string name="desc_feature_hide_energy_cube">Hides the Energy Cube animation when launching games</string>
+    <string name="label_feature_watermark_length">Unlock Watermark Length</string>
+    <string name="desc_feature_watermark_length">Unlock the 10-character limit for custom watermarks</string>
     <string name="msg_changes_instant">Changes apply instantly</string>
 
     <!-- Settings Items -->

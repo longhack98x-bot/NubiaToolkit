@@ -2,5 +2,6 @@
 <resources>
     <string-array name="xposed_scope">
         <item>cn.nubia.gameassist</item>
+        <item>cn.nubia.gamelauncher</item>
     </string-array>
 </resources>

@@ -36,6 +36,7 @@ public class HookEntry implements IXposedHookLoadPackage {
         boolean globalMode = false;
         boolean hideEnergyCube = false;
         boolean superResolution = false;
+        boolean watermarkLength = false;
         String langCode = "en";
         
         try {
@@ -53,13 +54,14 @@ public class HookEntry implements IXposedHookLoadPackage {
                     if (cursor.getColumnCount() > 4) globalMode = cursor.getInt(4) == 1;
                     if (cursor.getColumnCount() > 5) hideEnergyCube = cursor.getInt(5) == 1;
                     if (cursor.getColumnCount() > 6) superResolution = cursor.getInt(6) == 1;
+                    if (cursor.getColumnCount() > 7) watermarkLength = cursor.getInt(7) == 1;
                     cursor.close();
                 }
             }
         } catch (Throwable t) {
             XposedBridge.log("NubiaNoKill: Failed to query provider: " + t.getMessage());
         }
-        return new Object[]{global, nokill, showToast, langCode, globalMode, hideEnergyCube, superResolution};
+        return new Object[]{global, nokill, showToast, langCode, globalMode, hideEnergyCube, superResolution, watermarkLength};
     }
     
     private String getLocalizedToast(String lang) {
@@ -75,12 +77,48 @@ public class HookEntry implements IXposedHookLoadPackage {
     @Override
     public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
         if (lpparam.packageName.equals("com.khanhnguyen9872.nubiatoolkit")) {
-            XposedHelpers.findAndHookMethod("com.khanhnguyen9872.nubiatoolkit.MainActivity", lpparam.classLoader, "isModuleActive", 
-                 new XC_MethodHook() { @Override protected void beforeHookedMethod(MethodHookParam param) { param.setResult(true); }});
-             return;
+            try {
+                XposedHelpers.findAndHookMethod("com.khanhnguyen9872.nubiatoolkit.MainActivity", lpparam.classLoader, "isModuleActive", 
+                     new XC_MethodHook() { @Override protected void beforeHookedMethod(MethodHookParam param) { param.setResult(true); }});
+                XposedHelpers.findAndHookMethod("com.khanhnguyen9872.nubiatoolkit.MainActivity", lpparam.classLoader, "isHelperActive", 
+                     new XC_MethodHook() { @Override protected void beforeHookedMethod(MethodHookParam param) { param.setResult(true); }});
+                XposedHelpers.findAndHookMethod("com.khanhnguyen9872.nubiatoolkit.MainActivity", lpparam.classLoader, "isSpaceActive", 
+                     new XC_MethodHook() { @Override protected void beforeHookedMethod(MethodHookParam param) { param.setResult(true); }});
+            } catch (Throwable t) {
+                XposedBridge.log("NubiaNoKill: Toolkit activity hooks failed: " + t.getMessage());
+            }
+            return;
         }
 
-        if (!lpparam.packageName.equals("cn.nubia.gameassist"))
+
+        if (lpparam.packageName.equals("cn.nubia.gamelauncher")) {
+            // Hook for Watermark Length in GameSpace (cn.nubia.gamelauncher)
+            try {
+                XposedHelpers.findAndHookConstructor(
+                    "cn.nubia.gamecenter.settings.watermark.WaterMarkWatcher",
+                    lpparam.classLoader,
+                    android.widget.EditText.class,
+                    int.class, // maxLength
+                    new XC_MethodHook() {
+                        @Override
+                        protected void beforeHookedMethod(MethodHookParam param) {
+                            Object[] settings = getSettings();
+                            boolean globalEnabled = (Boolean) settings[0];
+                            boolean watermarkLengthEnabled = (Boolean) settings[7];
+                            
+                            if (globalEnabled && watermarkLengthEnabled) {
+                                // Increase maxLength to something large (e.g., 100)
+                                param.args[1] = 100;
+                            }
+                        }
+                    }
+                );
+            } catch (Throwable t) {
+                XposedBridge.log("NubiaNoKill: WaterMarkWatcher hook failed: " + t.getMessage());
+            }
+        }
+
+        if (!lpparam.packageName.equals("cn.nubia.gameassist") && !lpparam.packageName.equals("cn.nubia.gamelauncher"))
             return;
 
         XposedHelpers.findAndHookMethod(
