@@ -1,6 +1,6 @@
 # Nubia Toolkit
 
-Nubia Toolkit is an Xposed/LSPosed module designed for Nubia RedMagic devices to unlock hidden features, remove limitations, and enhance the user experience of the compiled system apps like Game Space and Game Assist.
+Nubia Toolkit is an Xposed/LSPosed module designed for Nubia RedMagic devices to unlock hidden features, remove limitations, and enhance the user experience of compiled system apps like Game Space and Game Assist.
 
 ## Features
 
@@ -9,6 +9,13 @@ Nubia Toolkit is an Xposed/LSPosed module designed for Nubia RedMagic devices to
 *   **No Kill Logic:** Prevents the system from aggressively killing background apps (configurable "No Kill" mode).
 *   **Game Space Enhancements:** Hooks into Game Space and Game Assist to enable features on unsupported devices or modify their behavior.
 *   **Widget Modifications:** Customizations and fixes for Game Widgets (Fan, FPS, Health).
+
+## Screenshots
+
+| | | |
+|:---:|:---:|:---:|
+| <img src="images/screenshot_01.png" width="300" /> | <img src="images/screenshot_02.png" width="300" /> | <img src="images/screenshot_03.png" width="300" /> |
+| <img src="images/screenshot_04.png" width="300" /> | <img src="images/screenshot_05.png" width="300" /> | <img src="images/screenshot_06.png" width="300" /> |
 
 ## Requirements
 
