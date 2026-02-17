@@ -1,48 +1,87 @@
-# Nubia Toolkit
+<div align="center">
+  <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="NubiaToolkit Logo" width="120" />
+  <h1>Nubia Toolkit</h1>
+  <p><strong>Advanced Customization for RedMagic</strong> <br /> Unlock hidden features and enhance your Nubia RedMagic experience.</p>
+</div>
 
-Nubia Toolkit is an Xposed/LSPosed module designed for Nubia RedMagic devices to unlock hidden features, remove limitations, and enhance the user experience of compiled system apps like Game Space and Game Assist.
+<div align="center">
 
-## Features
+[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+[![Platform](https://img.shields.io/badge/platform-Android-green.svg)]()
+[![Root](https://img.shields.io/badge/root-required-red.svg)]()
+[![Xposed](https://img.shields.io/badge/framework-LSPosed-blue.svg)]()
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)]()
 
-*   **Super Resolution Unlock:** Forces the "Superior Pic Quality" (Super Resolution) feature to be enabled and visible, bypassing device model checks.
-*   **Watermark Limit Removal:** Removes the length restriction for custom watermark text in the camera app.
-*   **No Kill Logic:** Prevents the system from aggressively killing background apps (configurable "No Kill" mode).
-*   **Game Space Enhancements:** Hooks into Game Space and Game Assist to enable features on unsupported devices or modify their behavior.
-*   **Widget Modifications:** Customizations and fixes for Game Widgets (Fan, FPS, Health).
+</div>
 
-## Screenshots
+## 🌟 Introduction
 
-| | | |
-|:---:|:---:|:---:|
-| <img src="images/screenshot_01.png" width="300" /> | <img src="images/screenshot_02.png" width="300" /> | <img src="images/screenshot_03.png" width="300" /> |
-| <img src="images/screenshot_04.png" width="300" /> | <img src="images/screenshot_05.png" width="300" /> | <img src="images/screenshot_06.png" width="300" /> |
+**Nubia Toolkit** is a powerful Xposed/LSPosed module designed specifically for **Nubia RedMagic** devices. It dives deep into the system framework to unlock hidden capabilities, bypass restrictions, and optimize the gaming experience by modifying system apps like Game Space and Game Assist.
 
-## Requirements
+## ✨ Key Features
 
-*   **Rooted Nubia RedMagic Device:** This module requires Root access to function.
-*   **LSPosed Framework:** You must have LSPosed (Zygisk or Riru) installed and active.
-*   **Android 12+:** Targeted for recent Nubia OS versions (MyOS/RedMagic OS).
+-   **🔓 Super Resolution Unlock**:
+    -   Forces "Superior Pic Quality" to be enabled and visible.
+    -   Bypasses device model checks for premium features.
+-   **💧 Watermark Limit Removal**:
+    -   Type longer custom text in your Camera watermark (bypasses character limit).
+-   **🚀 Optimization Tweaks**:
+    -   **No Kill Logic**: Prevent aggressive background app killing (configurable).
+    -   **Global Game Mode**: Enable game optimizations for any app.
+    -   **Hide Energy Cube**: Clean up your UI.
+-   **🎮 Game Space Enhancements**:
+    -   Hooks into Game Space/Assist for extended functionality.
+    -   Widget customizations (Fan, FPS, Health).
 
-## Installation
+## 📱 Screenshots
 
-1.  Download the latest release APK.
-2.  Install the APK on your device.
-3.  Open the **LSPosed Manager** app.
-4.  Enable the **Nubia Toolkit** module.
-5.  Select the recommended scope (System Framework, Game Space, Game Assist, etc. - usually pre-configured).
-6.  Reboot your device to apply changes.
-7.  Open the **Nubia Toolkit** app to configure specific settings.
+<div align="center">
+    <img src="images/screenshot_01.png" width="200" style="margin: 5px;" alt="Screenshot 1" />
+    <img src="images/screenshot_02.png" width="200" style="margin: 5px;" alt="Screenshot 2" />
+    <img src="images/screenshot_03.png" width="200" style="margin: 5px;" alt="Screenshot 3" />
+    <br/>
+    <img src="images/screenshot_04.png" width="200" style="margin: 5px;" alt="Screenshot 4" />
+    <img src="images/screenshot_05.png" width="200" style="margin: 5px;" alt="Screenshot 5" />
+    <img src="images/screenshot_06.png" width="200" style="margin: 5px;" alt="Screenshot 6" />
+</div>
 
-## Usage
+## ⚙️ Requirements
 
-*   Open the app to toggle specific tweaks.
-*   Some features (like "No Kill") may require granting Root permissions to the app itself for additional control.
-*   "Force Stop on Apply": Use this option in the settings to restart targeted apps (Game Space, etc.) so hooks can take effect immediately without a full reboot.
+-   **Rooted Nubia RedMagic Device**
+-   **LSPosed Framework** (Zygisk or Riru) installed and active.
+-   **Android 12+** (Targeting MyOS/RedMagic OS).
 
-## Disclaimer
+## 🚀 Installation
 
-This software is provided "as is", without warranty of any kind. Modifying system behavior carries risks. The developer is not responsible for any bootloops, data loss, or bricked devices. Always backup your data before installing Xposed modules.
+1.  **Download**: Get the latest APK from the [Releases](https://github.com/KhanhNguyen9872/NubiaToolkit/releases) page.
+2.  **Install**: Install the APK on your device.
+3.  **Activate**:
+    -   Open **LSPosed Manager**.
+    -   Enable **Nubia Toolkit** module.
+    -   Ensure the scope includes **System Framework**, **Game Space**, and **Game Assist**.
+4.  **Reboot**: Restart your device to apply hooks.
 
-## License
+## 📖 Usage
 
-See the [LICENSE](LICENSE) file for details.
+1.  Open the **Nubia Toolkit** app.
+2.  Toggle the features you want to enable.
+3.  Grant Root permissions if requested (for "No Kill" or "Force Stop" features).
+4.  Use "Force Stop on Apply" to restart target apps without a full reboot (if supported).
+
+## ⚠️ Disclaimer
+
+This software is provided "as is", without warranty of any kind. Modifying system behavior via Xposed carries inherent risks. The developer is **not responsible** for bootloops, data loss, or bricked devices. **Always backup your data** before installing system modules.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## ✍️ Author
+
+**Nguyễn Văn Khánh** (KhanhNguyen9872)
+
+-   GitHub: [@KhanhNguyen9872](https://github.com/KhanhNguyen9872)
+
+## 📄 License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
